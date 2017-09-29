@@ -1,0 +1,342 @@
+---
+title: "Residential care chains"
+output:
+  html_notebook: default
+  html_document: default
+  pdf_document: default
+---
+
+This is an analysis intended to investigate whether residential and nursing homes that are parts of chains have different assessed levels of care quality.
+
+```{r opts}
+library(knitr)
+opts_chunk$set(echo = FALSE)
+opts_chunk$set(include = TRUE)
+opts_chunk$set(cache = FALSE)
+opts_chunk$set(tidy = TRUE)
+```
+
+```{r data, message=FALSE}
+library(ordinal)
+library(effects)
+library(ggplot2)
+library(dplyr)
+library(vcd)
+
+comp11 <- read.csv('comp11.csv')
+comp11$chapter1.old <- ordered(comp11$chapter1, levels = c('X', 'N','Y'))
+comp11$chapter2.old <- ordered(comp11$chapter2, levels = c('X', 'N','Y'))
+comp11$chapter3.old <- ordered(comp11$chapter3, levels = c('X', 'N','Y'))
+comp11$chapter4.old <- ordered(comp11$chapter4, levels = c('X', 'N','Y'))
+comp11$chapter5.old <- ordered(comp11$chapter5, levels = c('X', 'N','Y'))
+
+
+comp11$chapter1.new <- ordered(comp11$chapter1, levels = c('I', 'R', 'G', 'O'))
+comp11$chapter2.new <- ordered(comp11$chapter2, levels = c('I', 'R', 'G', 'O'))
+comp11$chapter3.new <- ordered(comp11$chapter3, levels = c('I', 'R', 'G', 'O'))
+comp11$chapter4.new <- ordered(comp11$chapter4, levels = c('I', 'R', 'G', 'O'))
+comp11$chapter5.new <- ordered(comp11$chapter5, levels = c('I', 'R', 'G', 'O'))
+
+comp11$chap1 <- ordered(comp11$chap1, levels = c('Inadequate', 'Poor', 'Good'))
+comp11$chap2 <- ordered(comp11$chap2, levels = c('Inadequate', 'Poor', 'Good'))
+comp11$chap3 <- ordered(comp11$chap3, levels = c('Inadequate', 'Poor', 'Good'))
+comp11$chap4 <- ordered(comp11$chap4, levels = c('Inadequate', 'Poor', 'Good'))
+comp11$chap5 <- ordered(comp11$chap5, levels = c('Inadequate', 'Poor', 'Good'))
+
+```
+
+```{r functions}
+
+ef.plot <- function(m, term, title = NULL, response.name = term, conf.int = TRUE){
+  # Alternative to plots produced by the effects package, using ggplot2
+  require(effects)
+  require(ggplot2)
+  
+  if (!(class(m) %in% c('polr', 'clm'))) stop('Only works for polr or clm objects')
+  if (!is.character(term)) stop('term must be a string')
+  
+  eftabs <- effect(term, m)
+  dta <- data.frame(eftabs$prob)
+  dta.l <- data.frame(eftabs$lower.prob)
+  dta.u <- data.frame(eftabs$upper.prob)
+  names(dta) <- eftabs$y.levels
+  names(dta.l) <- eftabs$y.levels
+  names(dta.u) <- eftabs$y.levels
+  
+  dta <- suppressMessages(reshape2::melt(dta))
+  dta.l <- suppressMessages(reshape2::melt(dta.l))
+  dta.u <- suppressMessages(reshape2::melt(dta.u))
+  
+  k <- dim(eftabs$x)[1]
+  n <- dim(dta)[1]
+  
+  if (is.null(levels(eftabs$x))){ # not a factor
+    dta[, term] <- eftabs$x
+  } else {
+    dta[, term] <- gl(k, 1, n, labels = levels(eftabs$x[, 1]))
+  }
+  dta$Lower <- dta.l$value
+  dta$Upper <- dta.u$value
+  names(dta)[1:2] <- c(eftabs$response,'Probability')
+  if (is.null(title)) title <- eftabs$response
+  if (is.null(response.name)) response.name <- term
+  g <- ggplot(dta, aes_string(x = term, y = "Probability", group = eftabs$response)) + 
+    geom_point(colour = 'red', size = 3) +
+    geom_line() + facet_grid(formula(paste(eftabs$response, "~ ."))) + theme(axis.text.x = element_text(size = 10)) + 
+    theme_bw() + labs(title = title, x = response.name)
+  
+  if (conf.int) {
+    g + geom_errorbar(aes(ymin = Lower, ymax = Upper), colour = 'darkgrey', width = 0.1) 
+  } else g
+    
+}
+```
+
+
+# Using three categories of size
+
+```{r vars}
+comp11$chain.type <- ifelse(comp11$Group_Size == 1, 'Independent',
+                       ifelse(comp11$Group_Size > 1 & comp11$Group_Size <= 10, 'Small',
+                          ifelse(comp11$Group_Size > 10 & comp11$Group_Size <= 70, 'Medium',
+                            ifelse(comp11$Group_Size > 70, 'Large', NA))))
+
+comp11$for_profit <- ifelse(comp11$sector == 'For-Profit', 'For-Profit', 'Non-Profit')
+
+dvs <- paste0('chap', 1:5)
+dvs.old <- paste0('chapter', 1:5, '.old')
+dvs.new <- paste0('chapter', 1:5, '.new')
+
+```
+
+## Descriptive statistics
+
+```{r dstats1}
+library(dplyr)
+grps <- comp11 %>% group_by(care.home.group) %>% select(care.home.group, sector, Group_Size)
+
+comp11 %>% group_by(sector)  %>% summarise(mean = mean(total.beds, na.rm = TRUE),
+                                          median = median(Group_Size, na.rm = TRUE),
+                                          max = max(Group_Size, na.rm = TRUE),
+                                          sd = sd(Group_Size, na.rm = TRUE),
+                                          n = n())
+
+
+comp11 %>% group_by(sector, regist.type) %>% summarise(mean = mean(Group_Size, na.rm = TRUE),
+                                          median = median(Group_Size, na.rm = TRUE),
+                                          max = max(Group_Size, na.rm = TRUE),
+                                          sd = sd(Group_Size, na.rm = TRUE),
+                                          n = n())
+
+library(vcd)
+tab1 <- xtabs(~sector + chain.type, comp11)
+tab1
+summary(tab1)
+mosaic(tab1, shade = TRUE)
+
+
+ggplot(comp11, aes(x = Group_Size, colour = sector)) + geom_density()
+```
+
+# Dummy for being in a chain
+
+```{r inchain}
+comp11 <- comp11 %>% filter(sector != 'Local Authority')
+
+forms <- paste(dvs.old, '~ sector * In_Group + Total.Beds.k + Age.k + purpose.built  + dementia + OVer.65.m')
+
+regs.old.pop <- lapply(forms, clm, data = comp11[comp11$compliance_regime == 'Old', ], Hess = TRUE)
+
+lapply(1:5, function(x) regs.old.pop[[x]]$call <<- call('clm', formula = as.formula(forms[x]), data = quote(comp11), Hess = TRUE))
+
+forms <- paste(dvs.new, '~ sector * In_Group + Total.Beds.k + Age.k + purpose.built  + dementia + OVer.65.m  ')
+regs.new.pop <- lapply(forms, clm, data = comp11[comp11$compliance_regime == 'New', ], Hess = TRUE)
+
+lapply(1:5, function(x) regs.new.pop[[x]]$call <<- call('clm', formula = as.formula(forms[x]), data = quote(comp11), Hess = TRUE))
+
+forms <- paste(dvs, '~ sector * In_Group + Total.Beds.k + Age.k + purpose.built  + dementia  + OVer.65.m  ')
+regs.all.pop <- lapply(forms, clm, data = comp11, Hess = TRUE)
+
+lapply(1:5, function(x) regs.all.pop[[x]]$call <<- call('clm', formula = as.formula(forms[x]), data = quote(comp11), Hess = TRUE))
+
+lapply(regs.old.pop, summary)
+
+lapply(regs.new.pop, summary)
+
+lapply(regs.all.pop, summary)
+
+```
+
+
+```{r regs1}
+forms <- paste(dvs.old, '~ sector*chain.type + Total.Beds.k + Age.k + purpose.built  + dementia + OVer.65.m')
+
+regs.old.pop <- lapply(forms, clm, data = comp11[comp11$compliance_regime == 'Old', ], Hess = TRUE)
+
+lapply(1:5, function(x) regs.old.pop[[x]]$call <<- call('clm', formula = as.formula(forms[x]), data = quote(comp11), Hess = TRUE))
+
+forms <- paste(dvs.new, '~ sector*chain.type + Total.Beds.k + Age.k + purpose.built  + dementia + OVer.65.m  ')
+regs.new.pop <- lapply(forms, clm, data = comp11[comp11$compliance_regime == 'New', ], Hess = TRUE)
+
+lapply(1:5, function(x) regs.new.pop[[x]]$call <<- call('clm', formula = as.formula(forms[x]), data = quote(comp11), Hess = TRUE))
+
+forms <- paste(dvs, '~ sector*chain.type + Total.Beds.k + Age.k + purpose.built  + dementia  + OVer.65.m  ')
+regs.all.pop <- lapply(forms, clm, data = comp11, Hess = TRUE)
+
+lapply(1:5, function(x) regs.all.pop[[x]]$call <<- call('clm', formula = as.formula(forms[x]), data = quote(comp11), Hess = TRUE))
+
+lapply(regs.old.pop, summary)
+
+lapply(regs.new.pop, summary)
+
+lapply(regs.all.pop, summary)
+```
+
+Problem caused by lack of large, local authority chains.  You could argue that any local authority home has the advantage of being part of a larger group even if the LA only operates a small number of homes, so perhaps exclude them?  First, try without interactions.
+
+```{r reg1a}
+forms <- paste(dvs.old, '~ sector + chain.type + Total.Beds.k + Age.k + purpose.built  + dementia + OVer.65.m')
+
+regs.old.pop <- lapply(forms, clm, data = comp11[comp11$compliance_regime == 'Old', ], Hess = TRUE)
+
+lapply(1:5, function(x) regs.old.pop[[x]]$call <<- call('clm', formula = as.formula(forms[x]), data = quote(comp11), Hess = TRUE))
+
+forms <- paste(dvs.new, '~ sector + chain.type + Total.Beds.k + Age.k + purpose.built  + dementia + OVer.65.m  ')
+regs.new.pop <- lapply(forms, clm, data = comp11[comp11$compliance_regime == 'New', ], Hess = TRUE)
+
+lapply(1:5, function(x) regs.new.pop[[x]]$call <<- call('clm', formula = as.formula(forms[x]), data = quote(comp11), Hess = TRUE))
+
+forms <- paste(dvs, '~ sector+ chain.type + Total.Beds.k + Age.k + purpose.built  + dementia  + OVer.65.m  ')
+regs.all.pop <- lapply(forms, clm, data = comp11, Hess = TRUE)
+
+lapply(1:5, function(x) regs.all.pop[[x]]$call <<- call('clm', formula = as.formula(forms[x]), data = quote(comp11), Hess = TRUE))
+
+lapply(regs.old.pop, summary)
+
+lapply(regs.new.pop, summary)
+
+lapply(regs.all.pop, summary)
+
+```
+
+## Second, exclude LA homes altogether.
+
+
+```{r regnola, include=FALSE}
+forms <- paste(dvs.old, '~ sector * chain.type + Total.Beds.k + Age.k + purpose.built  + dementia + OVer.65.m')
+
+regs.old.pop <- lapply(forms, clm, data = comp11, Hess = TRUE, subset = comp11$compliance_regime == 'Old' & comp11$sector != 'Local Authority')
+
+lapply(1:5, function(x) regs.old.pop[[x]]$call <<- call('clm', formula = as.formula(forms[x]), data = quote(comp11), Hess = TRUE, subset = quote(comp11$compliance_regime == 'Old' & comp11$sector != 'Local Authority')))
+
+forms <- paste(dvs.new, '~ sector * chain.type + Total.Beds.k + Age.k + purpose.built  + dementia + OVer.65.m  ')
+regs.new.pop <- lapply(forms, clm, data = comp11, Hess = TRUE, subset = comp11$compliance_regime == 'New' & comp11$sector != 'Local Authority')
+
+lapply(1:5, function(x) regs.new.pop[[x]]$call <<- call('clm', formula = as.formula(forms[x]), data = quote(comp11), Hess = TRUE, subset = quote(comp11$compliance_regime == 'New' & comp11$sector != 'Local Authority')))
+
+forms <- paste(dvs, '~ sector * chain.type + Total.Beds.k + Age.k + purpose.built  + dementia  + OVer.65.m  ')
+regs.all.pop <- lapply(forms, clm, data = comp11, Hess = TRUE, subset = comp11$sector != 'Local Authority')
+
+lapply(1:5, function(x) regs.all.pop[[x]]$call <<- call('clm', formula = as.formula(forms[x]), data = quote(comp11), Hess = TRUE, subset = quote(comp11$sector != 'Local Authority')))
+
+lapply(regs.old.pop, summary)
+
+lapply(regs.new.pop, summary)
+
+lapply(regs.all.pop, summary)
+
+```
+
+# Continuous measure of chain size
+
+Use log(Group_Size) because it is so skewed.
+
+```{r reg2}
+comp11$logChain_Size <- log(comp11$Group_Size)
+
+forms <- paste(dvs.old, '~ sector * logChain_Size + Total.Beds.k + Age.k + purpose.built  + dementia + OVer.65.m')
+
+regs.old.pop <- lapply(forms, clm, data = comp11, Hess = TRUE, subset = comp11$compliance_regime == 'Old')
+
+lapply(1:5, function(x) regs.old.pop[[x]]$call <<- call('clm', formula = as.formula(forms[x]), data = quote(comp11), Hess = TRUE, subset = quote(comp11$compliance_regime == 'Old')))
+
+forms <- paste(dvs.new, '~ sector * logChain_Size + Total.Beds.k + Age.k + purpose.built  + dementia + OVer.65.m  ')
+regs.new.pop <- lapply(forms, clm, data = comp11, Hess = TRUE, subset = comp11$compliance_regime == 'New')
+
+lapply(1:5, function(x) regs.new.pop[[x]]$call <<- call('clm', formula = as.formula(forms[x]), data = quote(comp11), Hess = TRUE, subset = quote(comp11$compliance_regime == 'New')))
+
+forms <- paste(dvs, '~ sector * logChain_Size + Total.Beds.k + Age.k + purpose.built  + dementia  + OVer.65.m  ')
+regs.all.pop <- lapply(forms, clm, data = comp11, Hess = TRUE)
+
+lapply(1:5, function(x) regs.all.pop[[x]]$call <<- call('clm', formula = as.formula(forms[x]), data = quote(comp11), Hess = TRUE))
+
+lapply(regs.old.pop, summary)
+
+lapply(regs.new.pop, summary)
+
+lapply(regs.all.pop, summary)
+
+
+forms <- paste(dvs.old, '~ sector + logChain_Size + Total.Beds.k + Age.k + purpose.built  + dementia + OVer.65.m')
+
+regs.old.noi <- lapply(forms, clm, data = comp11, Hess = TRUE, subset = comp11$compliance_regime == 'Old')
+
+lapply(1:5, function(x) regs.old.noi[[x]]$call <<- call('clm', formula = as.formula(forms[x]), data = quote(comp11), Hess = TRUE, subset = quote(comp11$compliance_regime == 'Old')))
+
+forms <- paste(dvs.new, '~ sector + logChain_Size + Total.Beds.k + Age.k + purpose.built  + dementia + OVer.65.m  ')
+regs.new.noi <- lapply(forms, clm, data = comp11, Hess = TRUE, subset = comp11$compliance_regime == 'New')
+
+lapply(1:5, function(x) regs.new.noi[[x]]$call <<- call('clm', formula = as.formula(forms[x]), data = quote(comp11), Hess = TRUE, subset = quote(comp11$compliance_regime == 'New')))
+
+forms <- paste(dvs, '~ sector + logChain_Size + Total.Beds.k + Age.k + purpose.built  + dementia  + OVer.65.m  ')
+regs.all.noi <- lapply(forms, clm, data = comp11, Hess = TRUE)
+
+lapply(1:5, function(x) regs.all.noi[[x]]$call <<- call('clm', formula = as.formula(forms[x]), data = quote(comp11), Hess = TRUE))
+
+
+```
+# LR test of interaction effects
+
+```{r inttests}
+Map(anova, regs.old.noi, regs.old.pop)
+
+Map(anova, regs.new.noi, regs.new.pop)
+
+Map(anova, regs.all.noi, regs.all.pop)
+```
+*No evidence that interactions are required*
+
+## Effect plots for `log(Chain_Size)`.  
+
+These plots use regressions without interactions.
+
+```{r efplot}
+
+lapply(regs.all.noi, ef.plot, term = 'logChain_Size')
+```
+
+
+
+## Repeat but excluding local authority homes
+
+```{r nola}
+
+forms <- paste(dvs.old, '~ sector + logChain_Size + Total.Beds.k + Age.k + purpose.built  + dementia + OVer.65.m')
+
+regs.old.noi <- lapply(forms, clm, data = comp11, Hess = TRUE, subset = comp11$compliance_regime == 'Old' & comp11$sector != 'Local Authority')
+
+lapply(1:5, function(x) regs.old.noi[[x]]$call <<- call('clm', formula = as.formula(forms[x]), data = quote(comp11), Hess = TRUE, subset = quote(comp11$compliance_regime == 'Old' & comp11$sector != 'Local Authority')))
+
+forms <- paste(dvs.new, '~ sector + logChain_Size + Total.Beds.k + Age.k + purpose.built  + dementia + OVer.65.m  ')
+regs.new.noi <- lapply(forms, clm, data = comp11, Hess = TRUE, subset = comp11$compliance_regime == 'New' & comp11$sector != 'Local Authority')
+
+lapply(1:5, function(x) regs.new.noi[[x]]$call <<- call('clm', formula = as.formula(forms[x]), data = quote(comp11), Hess = TRUE, subset = quote(comp11$compliance_regime == 'New' & comp11$sector != 'Local Authority')))
+
+forms <- paste(dvs, '~ sector + logChain_Size + Total.Beds.k + Age.k + purpose.built  + dementia  + OVer.65.m  ')
+regs.all.noi <- lapply(forms, clm, data = comp11, Hess = TRUE, subset = comp11$sector != 'Local Authority')
+
+lapply(1:5, function(x) regs.all.noi[[x]]$call <<- call('clm', formula = as.formula(forms[x]), data = quote(comp11), Hess = TRUE, subset = quote(comp11$sector != 'Local Authority')))
+
+lapply(regs.all.noi, summary)
+
+```

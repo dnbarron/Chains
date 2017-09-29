@@ -1,0 +1,709 @@
+---
+title: "Care home chains"
+output:
+  html_notebook: default
+  pdf_document: default
+date: '2017-01-24'
+---
+
+# Introduction
+
+The purpose of this analysis is to see if there is evidence of performance differences between care homes that are part of chains.  The hypothesis is that chains that are part of for-profit groups will have lower performance but those that are not will have higher performance because of learning benefits.
+
+```{r setup, echo=FALSE}
+library(knitr)
+opts_chunk$set(echo = TRUE)
+opts_chunk$set(include = TRUE)
+opts_chunk$set(cache = FALSE)
+opts_chunk$set(tidy = TRUE)
+opts_chunk$set(fig.width = 6, fig.asp = 0.618, out.width = "80%", fig.align = "center")
+```
+
+```{r data, message=TRUE, echo=FALSE}
+
+library(ordinal)
+library(effects)
+library(ggeffects)
+library(tidyverse)
+library(modelr)
+library(broom)
+library(vcd)
+library(stringr)
+library(texreg)
+library(tidyclm)
+
+comp11 <- read_csv('C:\\Users\\dbarron\\Dropbox\\Care Homes\\comp11.csv')
+comp11$chapter1.old <- ordered(comp11$chapter1, levels = c('X', 'N','Y'))
+comp11$chapter2.old <- ordered(comp11$chapter2, levels = c('X', 'N','Y'))
+comp11$chapter3.old <- ordered(comp11$chapter3, levels = c('X', 'N','Y'))
+comp11$chapter4.old <- ordered(comp11$chapter4, levels = c('X', 'N','Y'))
+comp11$chapter5.old <- ordered(comp11$chapter5, levels = c('X', 'N','Y'))
+
+
+comp11$chapter1.new <- ordered(comp11$chapter1, levels = c('I', 'R', 'G', 'O'))
+comp11$chapter2.new <- ordered(comp11$chapter2, levels = c('I', 'R', 'G', 'O'))
+comp11$chapter3.new <- ordered(comp11$chapter3, levels = c('I', 'R', 'G', 'O'))
+comp11$chapter4.new <- ordered(comp11$chapter4, levels = c('I', 'R', 'G', 'O'))
+comp11$chapter5.new <- ordered(comp11$chapter5, levels = c('I', 'R', 'G', 'O'))
+
+comp11$chap1 <- ordered(comp11$chap1, levels = c('Inadequate', 'Poor', 'Good'))
+comp11$chap2 <- ordered(comp11$chap2, levels = c('Inadequate', 'Poor', 'Good'))
+comp11$chap3 <- ordered(comp11$chap3, levels = c('Inadequate', 'Poor', 'Good'))
+comp11$chap4 <- ordered(comp11$chap4, levels = c('Inadequate', 'Poor', 'Good'))
+comp11$chap5 <- ordered(comp11$chap5, levels = c('Inadequate', 'Poor', 'Good'))
+
+```
+
+```{r functions, echo=FALSE}
+
+# tidy.clm <- function (x, conf.int = FALSE, conf.level = 0.95, exponentiate = FALSE, 
+#     quick = FALSE, cluster = FALSE, vcov = NULL, ...) {
+#     if (quick) {
+#         co <- ordinal:::coef.clm(x)
+#         ret <- data.frame(term = names(co), estimate = unname(co))
+#         return(process_lm(ret, x, conf.int = FALSE, exponentiate = exponentiate))
+#     }
+#     s <- summary(x)
+#     ret <- tidy.summary.clm(s, cluster = cluster, vcov = vcov)
+#     process_clm(ret, x, conf.int = conf.int, conf.level = conf.level, 
+#         exponentiate = exponentiate)
+# }
+# 
+# process_clm <- function(ret, x, conf.int = FALSE, conf.level = 0.95, exponentiate = FALSE){
+#   if (exponentiate){
+#     trans <- exp
+#   } else {
+#     trans <- identity
+#   }
+#   if (conf.int) {
+#     CI <- suppressMessages(ordinal:::confint.clm(x, level = conf.level, type = 'Wald'))
+#     colnames(CI) <- c('conf.low', 'conf.high')
+#     ret <- cbind(ret, trans(unrowname(CI)))
+#   }
+#   ret$estimate <- trans(ret$estimate)
+#   ret
+# }
+# 
+# unrowname <- function(x){
+#   rownames(x) <- NULL
+#   x
+# }
+# 
+# tidy.summary.clm <- function(x, cluster = FALSE, vcov = NULL, digits = 2, ...){
+#   co <- ordinal:::coef.clm(x)
+#     nn <- c("estimate", "std.error", "statistic", "p.value")
+#     if (inherits(co, "listof")) {
+#         ret <- plyr::ldply(co, fix_data_frame, nn[1:ncol(co[[1]])], 
+#             .id = "response")
+#         ret$response <- stringr::str_replace(ret$response, "Response ", 
+#             "")
+#     }
+#     else {
+#         ret <- fix_data_frame(co, nn[1:ncol(co)])
+#     }
+#     if (cluster){
+#       if (is.matrix(vcov)) {
+#         vcov <- sqrt(diag(vcov))
+#       }
+#       ret[, 'std.error'] <- vcov
+#       ret[, 'statistic'] <- ret[, 'estimate'] / vcov
+#       ret[, 'p.value'] <- pnorm(abs(ret[, 'statistic']), lower.tail = FALSE) * 2
+#     }
+#     ret
+# }
+# 
+# glance.clm <- function(x, ...){
+#   ret <- as.data.frame(x[c("logLik")])
+#   rownames(ret) <- NULL
+#   finish_glance(ret, x)
+# }
+# 
+# get_CL_vcov<-function(model, cluster){
+#   
+#   require(sandwich, quietly = TRUE)
+#   require(lmtest, quietly = TRUE)
+#   
+#   if (length(model$na.action) > 0) {
+#     cluster <- cluster[-model$na.action]
+#   }
+#   
+#   #calculate degree of freedom adjustment
+#   M <- length(unique(cluster))
+#   N <- length(cluster)
+#   K <- length(coef(model))
+#   dfc <- (M / (M - 1)) * ((N - 1) / (N - K))
+#   
+#   #calculate the uj's
+#   uj  <- apply(estfun(model),2, function(x) tapply(x, cluster, sum))
+#   
+#   #use sandwich to get the var-covar matrix
+#   vcovCL <- dfc * sandwich(model, meat=crossprod(uj) / N)
+#   return(vcovCL)
+# }
+# 
+# get_confint<-function(model, vcovCL){
+#   t <- qt(.975,  model$df.residual)
+#   ct <- coeftest(model, vcovCL)
+#   est <- cbind(ct[, 1], ct[, 1] - t * ct[, 2], ct[, 1] + t * ct[, 2])
+#   colnames(est) <- c("Estimate","LowerCI","UpperCI")
+#   return(est)
+# }
+
+
+# Function to turn broom output into input to texreg.
+# Just puts theshhold parameters at the end
+treg_prep <- function(x){
+  ix <- stringr::str_detect(x[[1]]$term, '\\|')
+  k <- length(ix)
+  theta <- sum(ix)
+  idx <- c((theta + 1):k, 1:theta)
+  map(x, ~.x[idx, ])
+}
+
+
+# ef.plot <- function(m, term, title = NULL, response.name = term, conf.int = TRUE, ...){
+#   # Alternative to plots produced by the effects package, using ggplot2
+#   require(effects)
+#   require(ggplot2)
+#   
+#   if (!(class(m) %in% c('polr', 'clm', 'clmm'))) stop('Only works for polr or clm objects')
+#   if (!is.character(term)) stop('term must be a string')
+#   
+#   eftabs <- effect(term, m, ...)
+#   dta <- data.frame(eftabs$prob)
+#   dta.l <- data.frame(eftabs$lower.prob)
+#   dta.u <- data.frame(eftabs$upper.prob)
+#   names(dta) <- eftabs$y.levels
+#   names(dta.l) <- eftabs$y.levels
+#   names(dta.u) <- eftabs$y.levels
+#   
+#   dta <- suppressMessages(reshape2::melt(dta))
+#   dta.l <- suppressMessages(reshape2::melt(dta.l))
+#   dta.u <- suppressMessages(reshape2::melt(dta.u))
+#   
+#   k <- dim(eftabs$x)[1]
+#   n <- dim(dta)[1]
+#   
+#   if (is.null(levels(eftabs$x))){ # not a factor
+#     dta[, term] <- eftabs$x
+#   } else {
+#     dta[, term] <- gl(k, 1, n, labels = levels(eftabs$x[, 1]))
+#   }
+#   dta$Lower <- dta.l$value
+#   dta$Upper <- dta.u$value
+#   names(dta)[1:2] <- c(eftabs$response,'Probability')
+#   if (is.null(title)) title <- eftabs$response
+#   if (is.null(response.name)) response.name <- term
+#   g <- ggplot(dta, aes_string(x = term, y = "Probability", group = eftabs$response)) + 
+#     geom_point(colour = 'red', size = 3) +
+#     geom_line() + facet_grid(formula(paste(eftabs$response, "~ ."))) + theme(axis.text.x = element_text(size = 10)) + 
+#     theme_bw() + labs(title = title, x = response.name)
+#   
+#   if (conf.int) {
+#     g + geom_errorbar(aes(ymin = Lower, ymax = Upper), colour = 'darkgrey', width = 0.1) 
+#   } else g
+#     
+# }
+```
+
+# Questions
+
+1. How to define chains?
+  1. Dichotomous (say, 3 or more = chain)
+  1. Size groups (large, medium small)
+  1. Count of number (logged?)
+2. Include all homes, or just elderly?
+3. Include local authority homes or not? If yes, are they chains?
+
+# Calculate chain variables
+
+First need to do some checking.
+
+```{r}
+comp11 %>% count(care.home.group, sort = TRUE)
+```
+
+The problem is there are 8020 cases with no `care.home.group` name.  Why?
+
+```{r}
+comp11 %>% filter(is.na(care.home.group)) %>% count(region)
+```
+No obvious patterns.  **Assume these homes are all independent**.  Generate a dummy `care.home.group` name for them so they don't seem to be in a chain with 8020 members!
+
+```{r newgroup}
+comp12 <- comp11 %>% 
+  mutate(care.home.group.new = 
+           ifelse(is.na(care.home.group), paste0('X', row_number()),
+                  care.home.group))
+
+
+```
+
+Look at the care home group names to see if there are obvious problems with typos, etc. (set `eval=FALSE` so it doesn't run when file compiled.)
+
+```{r, eval=FALSE}
+comp12 %>% count(care.home.group.new) %>% View()
+```
+## Descriptive statistics
+
+```{r dstats}
+comp12 %>% group_by(care.home.group.new) %>% count(care.home.group.new) %>%
+  summarise(mean = mean(n),
+            median = median(n),
+            q90 = quantile(n, probs = 0.9))
+```
+
+## Continuous
+
+This variable is based on `care.home.group.new`. The new variable `chain_size` is calculated as the number of care homes with the same group name.
+
+```{r cont}
+comp12 <- comp12 %>% group_by(care.home.group.new) %>% 
+  mutate(chain_size = n()) %>%
+  ungroup()
+```
+
+Test
+
+```{r}
+comp12 %>% count(chain_size) %>%
+  mutate(n_chains = n / chain_size) %>% print() %>%
+  filter(chain_size > 1) %>%
+  ggplot(aes(x = chain_size, y = n_chains)) + geom_col() + 
+  scale_x_discrete(labels = NULL) + 
+  labs(x = 'Chain size', y = 'Frequency', title = 'Chains with 2 or more members')
+
+
+#  arrange(desc(n_chains), n_chains)
+
+```
+
+Looks OK.  Calculate `log(chain_size`)
+
+```{r log}
+comp12 <- comp12 %>%
+  mutate(log_chain_size = log(chain_size))
+```
+
+```{r denplot}
+comp12 %>% ggplot(aes(x = log_chain_size)) + geom_density()
+```
+
+
+
+## Dichotomous
+
+```{r dichot}
+comp12 <- comp12 %>% 
+  mutate(in_chain = ifelse(chain_size >= 4, 'Yes', 'No')) 
+
+comp12 %>%  count(in_chain)
+```
+
+## Four categories
+
+* Independent is homes not in a chain
+* Small is chains with 2-10 members
+* Medium is chains with 11-70 members
+* Large is chains with > 70 members
+
+```{r}
+comp12 <- comp12 %>% mutate(chain_type = ifelse(chain_size == 1, 'Independent',
+                                  ifelse(chain_size <= 10, 'Small',
+                                    ifelse(chain_size <= 70,  'Medium', 'Large'))))
+
+comp12$chain_type <- forcats::fct_relevel(comp12$chain_type, levels = c('Independent', 'Small', 'Medium', 'Large'))
+```
+
+
+# Analysis
+
+**Don't include local authority homes.**
+
+```{r}
+comp12.noLA <- comp12 %>% filter(sector != 'Local Authority') %>%
+  mutate(sector = factor(sector))
+```
+
+## Descriptive stats
+
+```{r}
+comp12.noLA %>% 
+  select(chapter1.new, chapter2.new, chapter3.new, chapter4.new, chapter5.new) %>%
+  map(~table(.x, comp12.noLA$in_chain)) %>%
+  map(~mosaicplot(.x, shade = TRUE))
+
+comp12.noLA %>% count(chain_type) %>%
+  ggplot(aes(x = chain_type, y = n)) +
+  geom_bar(stat = 'identity') + theme_light() + 
+  labs(x = 'Chain size', y = 'Frequency')
+  
+```
+
+## Create formulas
+
+```{r forms}
+dvs <- paste0('chap', 1:5)
+dvs.old <- paste0('chapter', 1:5, '.old')
+dvs.new <- paste0('chapter', 1:5, '.new')
+rhs <- ' ~ sector + Total.Beds.k + Age.years + purpose.built  + dementia  + OVer.65.m '
+
+forms.all <- map(dvs, ~ str_c(.x, rhs)) 
+forms.old <- map(dvs.old, ~ str_c(.x, rhs))
+forms.new <- map(dvs.new, ~ str_c(.x, rhs))
+
+```
+## Dichotomous
+
+```{r}
+forms.new.di <- map(forms.new, ~ add_predictors(formula(.x, env = .GlobalEnv), ~ in_chain))
+fit.di <- comp12.noLA %>% 
+  fit_with(clm, forms.new.di, Hess = TRUE) 
+
+map(fit.di, tidy)
+```
+
+### Clustered standard errors
+
+```{r}
+hc.di <- fit.di %>% 
+  map(get_CL_vcov, comp12.noLA$care.home.group.new) %>% 
+  map(~ sqrt(diag(.x)))
+
+op.di <- map2(fit.di, hc.di, ~ tidy(.x, cluster = TRUE, vcov = .y))
+
+op.di <- treg_prep(op.di)
+coef.nms <- c('Not-for-Profit', 'Total beds / 1000', 'Age', 'Purpose built', 'No Dementia',
+              'Over 65 population (millions)', 'In a chain', 
+              'I|R', 'R|G', 'G|O')
+screenreg(fit.di, override.se = map(op.di, 'std.error'), 
+       override.pvalues = map(op.di, 'p.value'), 
+       custom.model.names = c('Safety', 'Staffing', 'Caring', 'Needs', 'Leadership'),
+       custom.coef.names = coef.nms,
+       stars = 0.05, dcolumn = TRUE, booktabs = TRUE, include.bic = FALSE, use.packages = FALSE,
+       label = "tab:res",
+       caption = "Ordinal logistic regression results with clustered standard errors.",
+       float.pos = "ht")
+```
+
+## Interaction with sector
+
+```{r}
+forms.new.di.int <- map(forms.new.di, ~ add_predictors(formula(.x, env = .GlobalEnv), ~ in_chain:sector))
+fit.di.int <- comp12.noLA %>%
+  fit_with(clm, forms.new.di.int, Hess = TRUE) 
+
+map(fit.di.int, tidy)
+
+```
+
+## With clustered standard errors
+
+```{r}
+hc.di.int <- fit.di.int %>% 
+  map(get_CL_vcov, comp12.noLA$care.home.group.new) %>% 
+  map(~ sqrt(diag(.x)))
+
+op.di.int <- map2(fit.di.int, hc.di.int, ~ tidy(.x, cluster = TRUE, vcov = .y))
+op.di.int <- treg_prep(op.di.int)
+coef.nms <- c('Not-for-Profit', 'Total beds / 1000', 'Age', 'Purpose built', 'No Dementia',
+              'Over 65 population (millions)', 'In a chain', 'In chain x Not-for-profit', 
+              'I|R', 'R|G', 'G|O')
+
+screenreg(fit.di.int, override.se = map(op.di.int, 'std.error'), 
+       override.pvalues = map(op.di.int, 'p.value'), 
+       custom.model.names = c('Safety', 'Staffing', 'Caring', 'Needs', 'Leadership'),
+       custom.coef.names = coef.nms,
+       stars = 0.05, dcolumn = TRUE, booktabs = TRUE, include.bic = FALSE, use.packages = FALSE,
+       label = "tab:res",
+       caption = "Ordinal logistic regression results with clustered standard errors.",
+       float.pos = "ht")
+
+```
+
+## Three levels of chain size
+
+```{r}
+forms.new.tri <- map(forms.new, ~ add_predictors(formula(.x, env = .GlobalEnv), ~ chain_type))
+fit.tri <- comp12.noLA %>% 
+  fit_with(clm, forms.new.tri, Hess = TRUE) 
+
+hc.tri <- map(fit.tri, ~ get_CL_vcov(.x, comp12.noLA$care.home.group.new))
+map2(fit.tri, hc.tri, ~tidy(.x, cluster = TRUE, vcov = .y))
+
+```
+
+### With interaction
+
+```{r}
+forms.new.tri.int <- map(forms.new.tri, ~ add_predictors(formula(.x, env = .GlobalEnv), ~ chain_type:sector))
+fit.tri.int <- comp12.noLA %>% 
+  fit_with(clm, forms.new.tri.int, Hess = TRUE) 
+
+hc.tri.int <- map(fit.tri.int, ~ get_CL_vcov(.x, comp12.noLA$care.home.group.new))
+op.tri.int <- map2(fit.tri.int, hc.tri.int, ~tidy(.x, cluster = TRUE, vcov = .y))
+
+op.tri.int <- treg_prep(op.tri.int)
+
+screenreg(fit.tri.int, override.se = map(op.tri.int, 'std.error'), 
+          override.pvalues = map(op.tri.int, 'p.value'), 
+       custom.model.names = c('Safety', 'Staffing', 'Caring', 'Needs', 'Leadership'),
+       stars = 0.05, dcolumn = TRUE, booktabs = TRUE, include.bic = FALSE, use.packages = FALSE,
+       label = "tab:res1",
+       caption = "Ordinal logistic regression results with clustered standard errors.",
+       float.pos = "ht")
+```
+
+## Continuous, logged
+
+
+```{r}
+forms.all.cont <- map(forms.all, ~ add_predictors(formula(.x, env = .GlobalEnv), ~ log_chain_size))
+fit.cont <- comp12.noLA %>% 
+  fit_with(clm, forms.all.cont, Hess = TRUE) 
+
+hc.cont <- map(fit.cont, ~ get_CL_vcov(.x, comp12.noLA$care.home.group.new))
+op.cont <- map2(fit.cont, hc.cont, ~tidy(.x, cluster = TRUE, vcov = .y))
+
+
+op.cont <- treg_prep(op.cont)
+
+screenreg(fit.cont, override.se = map(op.cont, 'std.error'), 
+       override.pvalues = map(op.cont, 'p.value'), 
+       custom.model.names = c('Safety', 'Staffing', 'Caring', 'Needs', 'Leadership'),
+       stars = 0.05, dcolumn = TRUE, booktabs = TRUE, include.bic = FALSE, use.packages = FALSE,
+       label = "tab:res",
+       caption = "Ordinal logistic regression results with clustered standard errors.",
+       float.pos = "ht")
+```
+### With interaction
+
+```{r}
+#forms.all.cont.int <- map(forms.all.cont, ~ add_predictors(formula(.x, env = .GlobalEnv), ~ log_chain_size:sector))
+
+forms.all.cont.int <- map(forms.all.cont, ~ add_predictors(.x, ~ log_chain_size:sector))
+
+fit.cont.int <- comp12.noLA %>% 
+  fit_with(clm, forms.all.cont.int, Hess = TRUE) 
+
+hc.cont.int <- map(fit.cont.int, ~ get_CL_vcov(.x, comp12.noLA$care.home.group.new))
+op.cont.int <- map2(fit.cont.int, hc.cont.int, ~tidy(.x, cluster = TRUE, vcov = .y))
+op.cont.int <- treg_prep(op.cont.int)
+
+op.cont.int <- treg_prep(op.cont.int)
+
+screenreg(fit.cont.int, override.se = map(op.cont.int, 'std.error'), 
+       override.pvalues = map(op.cont.int, 'p.value'), 
+       custom.model.names = c('Safety', 'Staffing', 'Caring', 'Needs', 'Leadership'),
+       stars = 0.05, dcolumn = TRUE, booktabs = TRUE, include.bic = FALSE, use.packages = FALSE,
+       label = "tab:res1",
+       caption = "Ordinal logistic regression results with clustered standard errors.",
+       float.pos = "ht")
+```
+## Effect plots
+
+```{r, include=FALSE}
+ef.plot <- function(data, ..., .model){
+  require(modelr, quietly = TRUE)
+  require(ggplot2, quietly = TRUE)
+  
+  new_data <- data_grid(data = data, ..., .model = .model)
+  pred <- predict(.model, newdata = new_data)
+  ret <- cbind(new_data, pred)
+  ret <- gather(ret, 'Rating', 'Prediction', starts_with('fit.'))
+  ret$Rating <- stringr::str_sub(ret$Rating, 5)
+#  ret$Rating <- ordered(ret$Rating, levels = c('Inadequate', 'Poor', 'Good'))
+
+  vars <- pryr::named_dots(...)
+
+  xvar <- vars[[1]]
+  if (length(vars) == 1) {
+    zvar <- NULL
+  } else {
+    zvar <- vars[[2]]
+  }  
+  
+  g <- ggplot(ret, aes_(x = substitute(xvar), y = quote(Prediction), 
+                        group = substitute(zvar), colour = substitute(zvar))) + 
+    geom_line() +
+    facet_grid(~ Rating) + 
+    theme(legend.position = 'top') 
+  
+  if (dim(ret)[1] < 100){
+    print(g + geom_point())
+  } else print(g)  
+  
+  invisible(ret)
+}
+
+clm_estimates <- function(f = forms.new, data = comp12.noLA, chn = 'log_chain_size'){
+  forms <- map(f, ~ add_predictors(formula(.x, env = .GlobalEnv), formula(paste('~ ', chn))))
+  fit <- fit_with(data, clm, forms, Hess = TRUE) 
+  hc <- map(fit, ~ get_CL_vcov(.x, comp12.noLA$care.home.group.new))
+  return(list(fit = fit, formula = forms, tidyop = map2(fit, hc, ~tidy(.x, cluster = TRUE, vcov = .y))))
+}
+```
+
+Need to include correct data frame in the call, and convert cml class output to polr, using the `clm.to.polr` function in the `effects` package.
+
+```{r, message=FALSE}
+edit_call <- function(x, df = quote(comp12.noLA)) {
+  x$call$data <- df
+  x
+}
+
+fit.tri.int.a <- map(fit.tri.int, edit_call)
+fit.tri.int.b <- map(fit.tri.int.a, effects:::clm.to.polr)
+fit.tri.int.pred <- map(fit.tri.int.b, ggpredict, terms = c('chain_type', 'sector'))
+
+fit.tri.int.pred.2 <- map(fit.tri.int.pred, 
+                          ~mutate(.x, response.level = 
+                                    forcats::fct_relevel(.x$response.level,
+                                                         'I','R','G','O')))
+
+fit.tri.int.pred.3 <- map(fit.tri.int.pred.2, 
+  ~mutate(.x, response.level = 
+     recode(.x$response.level, 
+                            I = 'Inadequate',
+                            R = 'Requires Improvement',
+                            G = 'Good',
+                            O = 'Outstanding')))
+
+
+ef.plot2 <- function(dta, cls = class(dta), atts = attributes(dta)){
+  
+  class(dta) <- cls
+  attributes(dta) <- atts
+  
+  q <- ggeffects:::plot.ggeffects(dta) + 
+    geom_line() + 
+    labs(title = "", colour = "Sector") +
+    xlab("Chain type") + 
+    ylab("Predicted probability") +
+    scale_y_continuous()
+  
+  plot(q)
+  #invisible(q)
+}
+
+#pdf('PredProbs.pdf', onefile = FALSE, )
+walk(fit.tri.int.pred.3, ef.plot2, 
+    cls = class(fit.tri.int.pred[[1]]), atts = attributes(fit.tri.int.pred[[1]]))
+#dev.off()
+```
+
+```{r, eval=FALSE}
+#for (i in 1:5){
+  ef.plot(comp12.noLA, in_chain, sector, .model = fit.di.int[[5]])
+#}
+```
+
+# Estimates using only new system
+
+## Dichotomous
+
+```{r}
+fit.di.new <- clm_estimates(chn = 'in_chain')
+fit.di.new$tidyop
+fit.di.new.int <- clm_estimates(chn = 'sector*in_chain')
+fit.di.new.int$tidyop
+```
+
+## Three levels
+
+```{r}
+fit.tri.new <- clm_estimates(chn = 'chain_type')
+fit.tri.new$tidyop
+fit.tri.new.int <- clm_estimates(chn = 'sector*chain_type')
+fit.tri.new.int$tidyop
+
+fit.tri.new.int
+hc.tri.new.int <- map(fit.tri.new.int[['fit']], ~ get_CL_vcov(.x, comp12.noLA$care.home.group.new))
+op.tri.new.int <- map2(fit.tri.new.int[['fit']], hc.tri.new.int, ~tidy(.x, cluster = TRUE, vcov = .y))
+op.tri.new.int <- treg_prep(op.tri.new.int)
+
+op.tri.new.int <- treg_prep(op.tri.new.int)
+
+texreg(fit.tri.new.int[['fit']], override.se = map(op.tri.new.int, 'std.error'), 
+       override.pvalues = map(op.tri.new.int, 'p.value'), 
+       custom.model.names = c('Safety', 'Staffing', 'Caring', 'Needs', 'Leadership'),
+       stars = 0.05, dcolumn = TRUE, booktabs = TRUE, include.bic = FALSE, use.packages = FALSE,
+       label = "tab:res1",
+       caption = "Ordinal logistic regression results with clustered standard errors.",
+       float.pos = "ht")
+```
+
+## Continuous
+```{r}
+fit.cont.new <- clm_estimates(chn = 'log_chain_size')
+fit.cont.new$tidyop
+fit.cont.new.int <- clm_estimates(chn = 'sector*log_chain_size')
+fit.cont.new.int$tidyop
+
+```
+
+```{r, eval=FALSE}
+tri.efplot.dta <- ef.plot(comp12.noLA, chain_type, sector, .model = fit.tri.new$fit[[5]])
+
+```
+
+```{r, eval=FALSE}
+ef.plot(comp12.noLA, log_chain_size, sector, .model = fit.cont.int[[5]])
+```
+
+# Age deviation analysis
+
+```{r agedev}
+comp12.noLA.2 <- comp12.noLA %>%
+  group_by(care.home.group.new) %>%
+  summarise(group.mean.age = mean(Age.years, na.rm = TRUE)) %>%
+  inner_join(., comp12.noLA, by = "care.home.group.new") %>%
+  ungroup() %>%
+  mutate(age.deviation = Age.years - group.mean.age,
+         abs.age.deviation = abs(age.deviation),
+         chain_type2 = forcats::fct_recode(chain_type, Small = "Independent"))
+  
+  
+forms.new.tri.c <- map(forms.new, ~add_predictors(formula(.x, env = .GlobalEnv),
+                                                  ~chain_type2 * age.deviation))
+fit.tri.c <- comp12.noLA.2 %>%
+  fit_with(clm, forms.new.tri.c, Hess = TRUE)
+
+hc.tri.c <- map(fit.tri.c, ~get_CL_vcov(.x, comp12.noLA.2$care.home.group.new))
+map2(fit.tri.c, hc.tri.c, ~tidy(.x, cluster = TRUE, vcov = .y))
+
+#ef.plot(comp12.noLA.2, age.deviation, chain_type2, .model = fit.tri.c[[5]])
+
+#map(fit.tri.c, ~ ef.plot(comp12.noLA.2, age.deviation, chain_type2, .model = .x))
+
+```
+
+# STAN
+
+```{r stan, eval=FALSE}
+
+library(rstanarm)
+#comp12.noLA$total.beds.c <- comp12.noLA$Total.Beds.k * 10
+
+stan.tri.int.1 <- stan_polr(chapter1.new ~ sector + I(Total.Beds.k * 10) + Age.years + purpose.built +
+                            dementia + OVer.65.m + chain_type2 * age.deviation, data = comp12.noLA.2,
+                          prior = R2(0.2, "mean"))
+
+stan.tri.int.2 <- stan_polr(chapter2.new ~ sector + total.beds.c + Age.years + purpose.built +
+                            dementia + OVer.65.m + chain_type*sector, data = comp12.noLA,
+                          prior = R2(0.2, "mean"))
+stan.tri.int.3 <- stan_polr(chapter3.new ~ sector + total.beds.c + Age.years + purpose.built +
+                            dementia + OVer.65.m + chain_type*sector, data = comp12.noLA,
+                          prior = R2(0.2, "mean"))
+stan.tri.int.4 <- stan_polr(chapter4.new ~ sector + total.beds.c + Age.years + purpose.built +
+                            dementia + OVer.65.m + chain_type*sector, data = comp12.noLA,
+                          prior = R2(0.2, "mean"))
+stan.tri.int.5b <- stan_polr(chapter5.new ~ sector + I(Total.Beds.k * 10) + Age.years + 
+                               purpose.built + dementia + OVer.65.m + 
+                               chain_type2 * I(age.deviation / 10), data = comp12.noLA.2,
+                          prior = R2(0.7, "mean"))
+
+summary(stan.tri.int.2)
+prior_summary(stan.tri.int)
+plot(stan.tri.int)
+```

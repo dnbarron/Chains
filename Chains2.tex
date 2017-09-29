@@ -1,0 +1,309 @@
+\documentclass[a4paper,11pt,titlepage,british]{article}
+
+\usepackage{babel}
+
+\usepackage[backend=biber,
+            style=chicago-authordate,
+            natbib=true,
+            date=short,
+            sorting=nyt]{biblatex}
+
+\newcommand{\possessivecite}[1]{\citeauthor{#1}'s \citeyear{#1}}%
+
+\DeclareLanguageMapping{british}{british-apa}
+
+\usepackage[sc]{mathpazo}
+\linespread{1.05}         % Palatino needs more leading (space between lines)
+\usepackage[scaled]{helvet} % ss
+\usepackage{courier} % tt
+\normalfont
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\usepackage{csquotes}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{bm}
+
+\usepackage{hyperref}
+
+\usepackage[nodayofweek,long]{datetime}
+
+\usepackage{tabularx}
+\usepackage{graphicx}
+
+\usepackage{vmargin,setspace}
+
+\usepackage{booktabs}
+\usepackage{dcolumn}
+\usepackage{rotating}
+\usepackage{color}
+
+\usepackage[nolists,tablesfirst]{endfloat}
+%\DeclareDelayedFloatFlavor{sidewaystable}{table}
+
+\usepackage{caption}
+ \captionsetup[table]{justification=raggedright}
+
+%\usepackage[firstpage]{draftwatermark}
+%  \SetWatermarkScale{1}
+
+\usepackage{amsthm}
+\newtheorem{hypothesis}{Hypothesis}
+
+\usepackage{comment}
+    \specialcomment{dnbcomment}{\begingroup\color{red}}{\endgroup}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{}
+\cfoot{\thepage}
+\lfoot{}
+\rfoot{}
+\renewcommand{\headrulewidth}{0pt}
+
+%\doublespacing
+
+ \setpapersize{A4}
+ \setmarginsrb{25mm}{25mm}{25mm}{25mm}{14.5pt}{10mm}{0pt}{10mm}
+
+\title{Organizational Interdependence or Splendid Isolation: Does Being Part of a Chain Produce Better Quality Care for Residents in English Nursing and Residential Care Homes?}%
+
+\author{David N. Barron\\ Sa\"{\i}d Business School, University of Oxford\\ Park End Street \\ Oxford OX1 7HP\\ david.barron@sbs.ox.ac.uk %
+ \and %
+ Elizabeth West \\ School of Health and Social Care\\ University of Greenwich }%
+
+\date{\today}%
+
+\addbibresource{C:/Users/dbarron/Dropbox/Care Homes/carehomes.bib}
+%\addbibresource{C:\\Users\\dbarron\\Documents\\LocalTeX\\bibtex\\bib/Organizations.bib}
+
+% ----------------------------------------------------------------
+\begin{document}
+
+% ----------------------------------------------------------------
+
+\maketitle
+
+\begin{abstract}
+Abstract here
+\end{abstract}
+
+
+\section{Introduction}
+
+Recent research has shown that the quality of care homes in England, as rated by the sector regulator the Care Quality Commission (CQC), varies depending on whether they are operated by a for-profit business or a non-profit provider (either a charity or a local authority) \parencite{Barron2017}.  On average, for-profit providers received lower CQC quality ratings than did residential and nursing care homes run by a public sector provider or a private, non-profit organization.  However, whether a facility's owner is for-profit or non-profit, public or private, are not the only factors that may influence the quality of care the facility is able to provide to its residents.  One factor that has attracted some interest among scholars is whether or not a home is part of a chain; that is, a group of homes with a common owner.  In a manner of speaking, residential and nursing homes have long been provided by ``chains'' in the UK, in the sense that, until the impact of the Health and Social Care Act of 1990, most such care was provided by facilities operated by local authorities or the National Health Service (NHS).  There is also a long tradition of homes operated by charities, exemplified by the \href{http://www.anchor.org.uk/}{Anchor Trust}, which currently operates 118 facilities in the UK.  However, it is the growth of chains owned by private, for-profit businesses that has attracted most attention in recent years.  By the standards of many economic sectors, the care home sector remains highly fragmented.  Of the more than 19,500 residential and nursing homes in the UK, 8058 (41\%) are not part of any chain at all.  However, the growth of the largest chains has been quite rapid in recent years.  In the for-profit sector there are six chains with more than 150 homes: Priory Group, HC-One, Barchester Healthcare, Voyage Care, BUPA Care Homes, and Four Seasons Health Care.  The latter is the largest by some margin, owning 469 facilities compared to the 287 operated by its nearest rival, BUPA, but these six chains combined account for only 7.1\% of the total number of facilities.
+
+Nevertheless, the rise of the chain raises important theoretical and practical questions.  Some scholars have pointed out that the chain has become the dominant organizational form across a wide range of service industries, such as retailing and hotels.  This suggests that there are advantages to the form that enable its members to appeal to large numbers of customers.  These benefits might also result in homes that are part of chains being able to offer better quality and/or cheaper care to its residents.  For example, chains might benefit from economies of scale due to an ability to negotiate better prices from suppliers or from sharing administrative overheads across multiple facilities.  They may also benefit from being able to share the benefits of learning across units in the same chain.  On the other hand, there may be substantial risks; the six chains listed above cater to about 60,000 residents.  While this is a small proportion of the total number of beds, if one or more of these operators were to fail, the impact on the residents themselves and on the local authorities who would have to step in would be very substantial.  In addition, the largest chains are often owned by private equity funds, and there is concern in some quarters that the complex legal structures that have developed as the chains grow by acquisition of existing, smaller firms, make it hard to know whether the public money that pays for the fees of many residents is being used to provide unreasonably high rates of return to investors rather than being used for the benefit of residents \parencite{Burns2016}.
+
+The purpose of this study is to investigate whether there are significant differences in the quality of care provided in adult residential care and nursing homes depending on whether they are independent or part of chains of different sizes, taking into account other characteristics of the home and its ownership, such as whether it is a for-profit, non-profit or public sector provider.  We first review relevant theory and previous research in this area.
+
+\section{Theory and Literature}
+
+Residential care chains are defined as a set of residential and/or nursing home facilities linked together by virtue of having a common owner.  The owner may be a for-profit business or a non-profit charity.  Local authorities can also run multiple facilities and so could be considered to be similar to chains.  The linkages between facilities are purely horizontal; there is no hierarchy to the relationship and each facility could, in theory, operate independently.
+
+\textcite{Baum1999} argues that there are three strategic rationales for the formation of chains in the nursing home industry: (1) economies of scale and/or market power; (2) branding; and (3) mutual forbearance.  We will discuss each of these in turn with reference to adult residential care and nursing home chains.
+
+\subsection{Economies of scale}
+
+Economies of scale, defined as a reduction in long-run average costs as output increases, can be of two types.  Pecuniary economies of scale are typically the result of larger firms having greater bargaining power with suppliers, which they use to obtain inputs at lower costs than those available to smaller firms.  Real economies of scale derive from increases in productivity as scale increases, for example because greater specialisation is possible as output increases. Either or both of these could theoretically be available at the level of an individual facility and/or the level of the (multiple home-owning) firm.
+
+Literature that seeks to find whether residential and/or nursing homes benefit from economies of scale and, if they do, to quantify the size of the economies and estimate the minimum efficient scale for a facility, relates almost entirely to the United States.  An early study into the extent of economies of scale in nursing homes was conducted in Iowa in 1983 \parencite{Nyman1990}.  They found that the optimal size in terms of cost efficiency for a nursing home was about 170 beds, much larger than the average size in their sample (which was 71).  \possessivecite{Christensen2004} study produced more complex findings.  Scale economies were found at all facility sizes when only intermediate care was provided, but for those homes that provided both intermediate and skilled care or that specialised in skilled care provision, scale economies were not found, presumably because the provision of skilled care is more labour intensive.  \textcite{Christensen2004} also found evidence of economies of scope from the provision of both intermediate and skilled care, particularly in relatively small facilities.
+
+There have been some studies in European nursing homes.  For example, \textcite{Farsi2004} studied cost efficiency in a small sample of Swiss nursing homes (n = 36) from 1993--2001.  They found that non-profit homes had lower costs than their public-sector counterparts, but all homes experienced economies of scale, with the most cost-efficient home having 162 beds.  \textcite{Hoess2009} investigated care home costs in Austria, although the study was limited to 13 facilities in one region of Austria in 2005.  They also found evidence of economies of scale, with the lowest costs being found in facilities with more than 100 beds.
+
+In summary, there is evidence that nursing homes experience economies of scale despite the labour intensive nature of their activities.  These scale economies are typically found at sizes well over 100 beds.  However, there is some evidence that scale economies are less important in facilities that provide the highest levels of care.
+
+The earliest attempts to investigate economies of scale in chains, which require \emph{firm level} (as opposed to home level) economies, generally found little or no evidence that they exist in either a US national sample or a sample of nursing homes in Colorado \parencites{Birnbaum1981}{Meiners1982}{Schlenker1984}. \textcite{Arling1987} examined nursing home costs in Virginia in 1985 and found that chain homes had significantly lower costs than public/non-profit providers, but so did non-chain for-profit homes.  \textcite{McKay1991} carried out a more detailed analysis of homes in Texas in 1983.  He divided homes into three ownership types: chain for-profit, independent for-profit, and non-profit/public.  Each group of homes was analysed separately, as there was clear evidence that estimated effects of factors influencing costs varied across ownership type.  Scale was measured by number of patient days.  Only chain homes were found to benefit from economies of scale, with the minimum of the cost curve at around 60,000 patient days, which is equivalent to about 173 beds, assuming 95\% occupancy.  However, more recently, while \textcite{Chen2004} found evidence of economies of scale at the facility level, there was no evidence of additional firm-level economies of scale.  They commented that ``the rationale behind recent increasing horizontal
+integration among nursing homes may not be seeking greater cost efficiency but some other consideration.''  A plausible alternative consideration would be obtaining market power.  Studies in the United States, then, have found little clear evidence of firm-level economies of scale.
+
+\subsection{Branding}
+
+It has been argued that many people who find it difficult to assess a facility's quality will prefer non-profit (either independent or public sector) providers because such organizations will be perceived to be motivated to deliver high quality care, with no conflict of interest caused by the pressure to deliver returns to owners \parencites{Arrow1963}{Hirth1999}{Grabowski2003}.  Indeed, there is evidence that the quality of care in facilities operated by for-profit providers is lower than that provided in non-profit facilities \parencite{Barron2017}.  However, it is possible that for-profit homes that are members of chains benefit from the development of a reputation for quality that is associated with the chain.  Brands can convincingly be associated with quality, because potential customers will reason that an organization that has invested in developing a reputation for quality will have a strong incentive to maintain quality.  Such effects have been demonstrated for hotel chains \parencite{Ingram1999}, but not for residential or nursing home facilities.  \textcite{Baum1999} argued that the benefits of branding are more likely to accrue when there are large numbers of facilities operating by the same chain in a small area, which is most likely to occur in urban areas.  However, in the UK, it is generally accepted that brands are not a significant factor in most the choices made by most potential residents \parencite{LaingBuisson2015}.
+
+\subsection{Learning}
+
+A possible benefit of chains is the ability for learning to be transferred from one facility to others in the chain.  In this way, facilities operated by chains may have an advantage in their ability to find ways of improving the quality of care and/or improving the efficiency of delivering the current level of quality. Several studies have found evidence of beneficial learning in chains of various different types, such as hotels and restaurants \parencites{Baum1998}{Sorenson2001}.  There have been a small number of studies in nursing home chains in particular. \textcite{Baum2000} found evidence of learning in the processes by which nursing home chains in Toronto, Canada select new acquisitions.  Of most relevance to this paper, \textcite{Mitchell2002} built on the ideas developed by \textcite{Hannan1984} and \textcite{Baum1999} to argue that chains would put a high value on standardization of practice across operating units.  They found evidence that the capabilities of components of nursing home chains in the United States do indeed increase when the average capabilities of the other components of the chain is higher than the current capability of a component. They suggest that this change is the result of knowledge transfer from the chain to the component, with the component learning the standardized procedures used in the rest of the chain.
+
+\subsection{Investor ownership}
+
+Both for-profit and non-profit providers can operate multiple care homes and, therefore, benefit (or suffer from) any (dis)economies of scale at the firm level.  However, for-profit chains are often owned by investors, particularly private equity funds.  There have been several studies investigating the quality of care provided by private equity owned care homes \parencites{BanaszakHoll2002}{Kitchener2008}{Harrington2012}{Cadigan2015}.  The concern that motivates these studies is that, when care homes are owned by external investors, the requirement to deliver a return on their investment may be in tension with the ability to deliver high quality care to residents, given that high quality care typically costs more to deliver.  Previous research has suggested that for-profit care homes deliver lower quality than non-profit or public sector operated facilities \parencite{Barron2017}, but this research did not distinguish between independent for-profit or non-profit homes and those that are part of chains.  If we assume that all care homes derive benefits from branding, learning, and/or economies of scale if they are part of a chain, the question becomes whether those benefits are used for the benefit of owners or residents.  If branding enables an owner to charge a higher price, for example, then this premium could be used to improve the quality of care or increase the return to owners.  The implication is that, while chain membership confers advantages on care homes in terms of their ability to offer better quality care, these benefits will be attenuated in the for-profit sector as the benefits will be shared with investors.  Therefore, at all levels of chain size, for-profit care homes will under-perform homes in the non-profit sector, but both types of care home in chains will perform better than the equivalent independent facility.  However, the increase in performance associated with being in a chain should be lower when the facility is owned by a for-profit provider.
+
+\begin{equation*}
+Q_i = f(\beta_1 S_i + \beta_2 C_i + \beta_3 S_i C_i),
+\end{equation*}
+where $Q_i$ is a measure of the quality of care in home $i$, $S_i$ is a dummy variable indicating whether the home is not-for-profit, $C_i$ is a measure of chain size, and $\beta_1$, $\beta_2$ and $\beta_3$ are parameters to be estimated.  Our hypotheses are:
+
+\begin{hypothesis}
+  $\beta_1 > 0$: quality of care is higher in non-profit facilities than for-profit homes.
+\end{hypothesis}
+
+\begin{hypothesis}
+  $\beta_2 > 0$: quality of care is higher in larger chains than in smaller chains or independent providers.
+\end{hypothesis}
+
+\begin{hypothesis}
+  $\beta_3 > 0$: the relationship between chain size and quality of care is stronger in non-profit providers than for-profit providers.
+\end{hypothesis}
+
+\noindent We describe how these concepts are measured and how the parameters are estimated in the next section.
+
+\section{Data and methods}
+
+The data we analyse were provided by LaingBuisson, the leading specialist consultants in the UK in this field. They compile data on registered care homes in the UK, a total of 19,721 facilities.  The data set contains, among other fields, details of each facility’s location; the type of client it is registered to care for; the number of beds; date of registration; fees charged for residential and/or nursing care; whether the provider is a local authority, non-profit or for-profit organization; and the results of the most recent CQC inspection, if any.  As the CQC is only responsible for inspecting facilities in England, analysis is restricted to this subset of homes.  There are 16,761 facilities in the complete data set, but missing data on quality ratings reduce the number of homes available for analysis; actual numbers are shown in the tables of results.  These facilities are all those registered to provide care to adults, of which 9,678 are primarily registered to provide care to people with dementia or over 64 years of age, 5,256 for adults with learning disabilities, 1,252 for adults with mental health problems, and the remainder for a range of other, smaller categories.  We carried out additional analyses that used only homes with primary registration groups older adults or people with dementia; results are substantively similar to those reported below.
+
+\subsection{Quality of care measure}
+
+The outcome measures used in this paper are derived from the Care Quality Commission’s inspection reports.  The most recent inspection report available for each home is used in the analysis; the earliest such report is dated 4 April 2011 while the most recent is dated 14 October 2015.  CQC inspections of residential adult social care services are carried out by means of unannounced visits by teams of inspectors.  These visits are informed by the collection of quantitative indicators, including incidence of pressure sores, medication errors and falls and admissions to hospital for preventable conditions, although these are treated as indicators of possible risk factors to be investigated rather than as the basis for inspection ratings.  The visits will typically use a range of methods of assessment, focussed on a standard set of Key Lines of Enquiry.  Evidence is gathered by means of interviews with residents and staff (senior staff, but also care and support staff, cleaning staff, etc.), observations of care, reviews of individual records and care plans, inspections of the physical environment, and a review of documents and policies.  Each inspection results in the production of a detailed report, publicly available on the CQC website.  Details of the inspection methods are available from the CQC \parencite{CQC2016}.  The results of CQC inspections are currently the only feasible way of comparing the quality of all the facilities in the population of English residential and nursing homes.  Inspection outcomes are summarised by giving each facility a rating on five fundamental standards. These are:
+
+\begin{enumerate}
+  \item \textbf{Is the service safe?} Are the residents protected from abuse and avoidable harm?
+  \item \textbf{Is the service effective?} Residents receive care that achieves good outcomes, helps maintain quality of life and is based on the best available evidence.
+  \item \textbf{Is the service caring?} Staff involve residents and treat them with compassion, kindness, dignity and respect.
+  \item \textbf{Is the service responsive to people’s needs?} Services are organized so that they meet the needs of residents.
+  \item	\textbf{Is the service well-led?} The leadership, management and governance of the organisation make sure it’s providing high-quality care that’s based around your individual needs, that it encourages learning and innovation, and that it promotes an open and fair culture.
+\end{enumerate}
+	
+Details of how each of these standards are evaluated are provided by the CQC \parencite{CQC2016}.  Each of the five standards is sub-divided into a number of key questions that the inspection team is required to answer.  For example, when evaluating the safety of care, inspectors have to ask ``How are people protected from bullying?'', ``How are risks to individuals and the service managed so that people are protected and their freedom is supported and respected?'',  ``How does the service make sure that there are sufficient numbers of suitable staff to keep people safe and meet their needs?'', and ``How are people’s medicines managed so that they receive them safely?''
+
+Each of these five standards is each given one of four ratings: Outstanding (``the service is performing exceptionally well''); Good (“the service is performing well and meeting expectations”); Requires improvement (``the service isn’t performing as well as it should, and has been told how it must improve''); or Inadequate (``the service is performing badly, and enforcement action has been taken''). By law, these ratings have to be displayed in the residential care facility where they can easily be seen, and they also have to be shown on the facility’s website, if there is one.
+
+One possible critique of these ratings is that they involve an element of subjectivity, which some might consider a disadvantage relative to studies that draw on objective measures.  For example, objective measures have been used extensively in North American studies.  \textcite{Comondore2009} describe 24 studies of nursing home quality that use pressure ulcer prevalence as the quality measure, 21 that measure the use of physical restraints, and 4 that use mortality.  However, inspector ratings are based on a very wide range of information sources, which includes objective records (for example, on staffing levels and use of agency staff), but importantly also draws on direct observation and obtaining the views of residents and their families.  Therefore, the inspector ratings are based on much richer sources of data than are those that use simple quantitative measures.  Nevertheless, because inspections do not rely on simple, quantitative measures there remains the possibility that ratings are influenced by conscious or unconscious biases among inspectors.  The CQC is aware of this possibility, and guards against it by setting up quality assurance panels that look at samples of inspection judgements to check consistency.  It is worth bearing in mind that quantitative outcome measures are likely to be associated with the level of residents’ needs and therefore it would be problematic to use such measures without robust controls for the level of needs, which are not available for UK care homes.
+
+\subsection{Explanatory variables}
+
+The key explanatory variable whether the care home is not in a chain, in a small chain (2--10 members), in a medium-sized chain (11--70 members), or a large chain (71 or more members).  Figure \ref{tab:chains} shows the distribution of chain types.  As can be seen, the independent care home still by far the most common form.  However, chains are becoming more prevalent, and the largest are becoming larger.
+We also distinguish between for-profit and not-for-profit chains.  Local authority homes are excluded from this analysis. Other explanatory variable are the size of the establishment, measured by the number of beds; the age of the establishment, measured by years since first registration; whether or not the building was purpose-built as a care home; whether the establishment is classified as a ``care home with nursing'' or a ``care home without nursing''; and whether the primary registered client group is people suffering from dementia.  The latter variable is included because it is known that homes find it more challenging to provide a good quality of life for residents suffering a significant degree of cognitive impairment \parencite{West2016}. We also control for the size of the over-65 population in the local authority area in which the facility is located as a measure of the size of demand for residential care in the local area.
+
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+Chain type & N \\
+\midrule
+Independent & 8026 \\
+Small (2--10) & 3761 \\
+Medium (11--70) & 3702 \\
+Large ($>$ 70) & 3098 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\caption{Distribution of chain sizes \label{tab:chains}}
+\end{table}
+
+\subsection{Methods of analysis}
+
+As the outcome variables are ordinal in nature, with four categories for inspection outcomes, the natural method of analysis is ordinal logistic regression \parencite{Agresti2013}. The simplest form of this method is proportional odds logistic regression:
+
+\begin{equation*}
+  \mathrm{logit}[\Pr(Y \le j | \boldsymbol{x})] = \alpha_j + \boldsymbol{\beta' x}, \quad j = 1, \dots, J - 1.
+\end{equation*}
+
+In this model, there are $J$ categories in the outcome variable (in our case, $J$ is 4), and a separate intercept $(\alpha_j)$ for each logit. The estimated effect of explanatory variables $(x)$, given by the vector of regression parameter estimates, $\beta$, is the same for each logit.  We tested this assumption using the procedure recommended by \textcite[335]{Harrell2001}.  Where appropriate, we relaxed the assumption and obtained separate estimates of the $\beta$ parameters associated with ownership type for each level of the outcome variable.  That is, we used the partial proportional odds model described by Peterson and Harrell (1990).  Whichever estimate is appropriate is reported in the tables of results shown below. Estimates were obtained using the \texttt{clm} function in the ordinal package \parencite{Christensen2015} in R 3.3.2 \parencite{R2017}.
+
+
+\section{Results}
+
+The results of ordinal logistic regressions for each of the five components of the CQC's inspections are shown in table \ref{tab:res1}.  The estimates that relate to the hypotheses described above are marked as $\beta_1$, $\beta_2$, and $\beta_3$, respectively.  For all of the five areas of inspection rating, we can see that not-for-profit homes out-perform their for-profit counterparts, as shown by the positive estimates of $\beta_1$.  We can also see that, for all of the inspection areas, the estimate of the impact of being in a chain ($\beta_2$) is positive, although in the case of Caring and Needs these estimates are not large enough to be statistically significant.  We can also see that in almost all cases the benefit of being in a chain gets larger as the size of the chain increases.  These results provide strong support for hypotheses 1 and 2: non-profit residential and nursing homes do better in CQC ratings, on average, than their for-profit counterparts.  All homes benefit from being part of a chain, although the benefit is small in some cases, with medium and large chains having the best performance.  On the other hand, there is little support for hypothesis 3.  Inclusion of the interaction effects (the estimates labelled $\beta_3$) does not significantly improve the fit of any of the five models.  Therefore, the impact of being in a chain is essentially the same regardless of whether the facility is run by a not-for-profit or a for-profit provider.  The size of the estimated differences in quality of care, based on the results in the table \ref{tab:res1}, are illustrated in figures \ref{fig:efplot1}--\ref{fig:efplot5}.
+
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{l D{.}{.}{5.3} D{.}{.}{5.3} D{.}{.}{5.3} D{.}{.}{5.3} D{.}{.}{5.3} }
+\toprule
+ & \multicolumn{1}{c}{Safety} & \multicolumn{1}{c}{Staffing} & \multicolumn{1}{c}{Caring} & \multicolumn{1}{c}{Needs} & \multicolumn{1}{c}{Leadership} \\
+\midrule
+Not-For-Profit ($\beta_1$)             & 0.32^{*}   & 0.37^{*}   & 0.69^{*}   & 0.56^{*}   & 0.62^{*}   \\
+                                       & (0.16)     & (0.16)     & (0.28)     & (0.19)     & (0.17)     \\
+Total beds / 1000                      & -16.73^{*} & -14.83^{*} & -15.12^{*} & -15.21^{*} & -10.17^{*} \\
+                                       & (1.49)     & (1.39)     & (1.72)     & (1.66)     & (1.43)     \\
+Age                                    & -0.02^{*}  & -0.02^{*}  & -0.01^{*}  & -0.02^{*}  & -0.02^{*}  \\
+                                       & (0.00)     & (0.00)     & (0.00)     & (0.00)     & (0.00)     \\
+Purpose built                          & 0.01       & -0.06      & -0.03      & -0.11      & -0.09      \\
+                                       & (0.07)     & (0.07)     & (0.10)     & (0.08)     & (0.07)     \\
+No dementia care                       & 0.20^{*}   & 0.24^{*}   & 0.32^{*}   & 0.23^{*}   & 0.22^{*}   \\
+                                       & (0.08)     & (0.09)     & (0.10)     & (0.09)     & (0.09)     \\
+Over 65 population (millions)          & -0.59      & -2.02      & 2.74       & -0.66      & -1.83      \\
+                                       & (1.08)     & (1.07)     & (1.69)     & (1.09)     & (1.13)     \\
+Small chain ($\beta_2$)                & 0.12       & 0.16       & 0.12       & 0.10       & 0.22^{*}   \\
+                                       & (0.09)     & (0.09)     & (0.11)     & (0.09)     & (0.09)     \\
+Medium chain ($\beta_2$)               & 0.31^{*}   & 0.21       & 0.10       & 0.15       & 0.30^{*}   \\
+                                       & (0.11)     & (0.11)     & (0.14)     & (0.12)     & (0.11)     \\
+Large chain ($\beta_2$)                & 0.35^{*}   & 0.30^{*}   & 0.19       & 0.19       & 0.44^{*}   \\
+                                       & (0.13)     & (0.14)     & (0.14)     & (0.13)     & (0.14)     \\
+Not-For-Profit $\times$ Small chain    & -0.02      & 0.08       & -0.51      & -0.17      & -0.09      \\
+$\quad (\beta_3)$                      & (0.24)     & (0.25)     & (0.40)     & (0.27)     & (0.25)     \\
+Not-For-Profit $\times$ Medium chain   & 0.17       & 0.27       & 0.06       & 0.24       & 0.10       \\
+$\quad (\beta_3)$                      & (0.23)     & (0.23)     & (0.33)     & (0.27)     & (0.23)     \\
+Not-For-Profit $\times$ Large chain    & -0.02      & 0.06       & -0.14      & 0.10       & -0.08      \\
+$\quad (\beta_3)$                      & (0.25)     & (0.25)     & (0.33)     & (0.26)     & (0.29)     \\
+I|R                                    & -3.27^{*}  & -3.93^{*}  & -4.89^{*}  & -4.30^{*}  & -3.24^{*}  \\
+                                       & (0.14)     & (0.15)     & (0.20)     & (0.16)     & (0.14)     \\
+R|G                                    & -0.88^{*}  & -1.08^{*}  & -2.07^{*}  & -1.38^{*}  & -0.77^{*}  \\
+                                       & (0.12)     & (0.13)     & (0.16)     & (0.14)     & (0.13)     \\
+G|O                                    & 6.87^{*}   & 4.98^{*}   & 3.98^{*}   & 4.24^{*}   & 4.55^{*}   \\
+                                       & (0.51)     & (0.26)     & (0.18)     & (0.19)     & (0.19)     \\
+\midrule
+AIC                                    & 10025.24   & 9208.10    & 6165.16    & 8631.46    & 9955.85    \\
+Log Likelihood                         & -4997.62   & -4589.05   & -3067.58   & -4300.73   & -4962.92   \\
+Num. obs.                              & 5900       & 5898       & 5897       & 5899       & 5898       \\
+\bottomrule
+\multicolumn{6}{l}{\scriptsize{$^*p<0.05$}}
+\end{tabular}
+\caption{Ordinal logistic regression results with clustered standard errors.}
+\label{tab:res1}
+\end{center}
+\end{table}
+
+The figures show that the main differences are found in the probabilities of being rated ``Requires improvement'' or ``Good''. This is not surprising, as the vast majority of facilities achieve one of these two ratings. The second panel of each graph shows that the probability that a facility requires improvement is higher for all types of chain when the facility is operated on a for-profit basis than it is when it is a not-for-profit organization.  For both ownership types, the probability of requiring improvement declines as the size of the chain increases.  For example, looking at figure \ref{fig:efplot5}, the predicted probability of requiring improvement in the leadership of an independent, for-profit facility is 0.37, which declines to 0.29 for a for-profit facility in a large chain.  Similarly, an independent, non-profit has a predicted probability of 0.26 of requiring improvement, while a not-profit facility in a large chain has an equivalent probability of 0.20.
+The predicted probability of an independent, for-profit facility being rated ``Good'' is 0.56, increasing to 0.66 for similar facilities in large chains.  The predicted probability of being rated ``Good'' when the facility is an independent, not-for-profit organization is 0.69, and 0.76 when the home is in a large chain.
+
+
+\begin{figure}
+  \caption{Effect plot: Safety}
+  \label{fig:efplot1}
+  \includegraphics[scale=0.7]{PredProbs1.pdf}
+\end{figure}
+
+\begin{figure}
+  \caption{Effect plot: Staffing}
+  \label{fig:efplot2}
+  \includegraphics[scale=0.7]{PredProbs2.pdf}
+\end{figure}
+
+\begin{figure}
+  \caption{Effect plot: Caring}
+  \label{fig:efplot3}
+  \includegraphics[scale=0.7]{PredProbs3.pdf}
+\end{figure}
+
+\begin{figure}
+  \caption{Effect plot: Needs}
+  \label{fig:efplot4}
+  \includegraphics[scale=0.7]{PredProbs4.pdf}
+\end{figure}
+
+
+\begin{figure}
+  \caption{Effect plot: Leadership}
+  \label{fig:efplot5}
+  \includegraphics[scale=0.7]{PredProbs5.pdf}
+\end{figure}
+
+The other results shown in the table are mainly consistent with findings reported in other studies.  We find that care quality is better in smaller and younger facilities and in homes that do not offer care to people suffering from dementia.  More surprisingly, there is no significant difference in the quality of care provided in facilities that were purpose-built as care or nursing homes and those that were converted for such use.
+
+\section{Conclusion}
+
+This study has shown for the first time in the UK that there is a clear advantage in terms of quality of care to residents of care homes being part of a chain, the advantage increasing as the chain gets larger.  We proposed a number of mechanisms, including economies of scale, branding, and learning, that could create this advantage, although this study is not able to investigate the mechanism that leads to the observed association between chain size and quality.
+
+Another possibility is that the association is due not to the constituents of chains benefitting from learning about how to deliver high quality care, but rather from learning about how to impress the CQC inspectors.  Alternatively, large chains may have the financial resources to challenge adverse findings.  It is of course possible that the mechanisms linking chain membership and quality rating are different from different chains; these are not mutually exclusive processes.  More detailed research would be needed to understand these processes properly, but the evidence in this paper shows that such detailed research would be very worthwhile.
+
+
+
+\newpage
+
+\printbibliography
+
+\end{document} 

@@ -1,0 +1,51 @@
+---
+title: "Nursing chains"
+output:
+  html_notebook: default
+---
+
+
+# Do 'corporates' dominate nursing sector with larger, purpose-built homes?
+
+## Total
+```{r overalltab}
+library(dplyr)
+options('digits' = 2)
+
+tab1 <- xtabs(~chain.type + purpose.built, comp11)
+prop.table(tab1, 1)
+
+```
+Large chains have 47% of purpose built homes, compared to 14% of independents. 
+
+## Nursing homes only
+
+```{r nursingtab}
+
+tab1 <- xtabs(~chain.type + purpose.built, comp11, subset = regist.code == 'N')
+prop.table(tab1, 1)
+
+comp11 %>% group_by(regist.code, sector) %>% summarise(total.beds = sum(Total.Beds.k*1000),
+                                                       n())
+
+comp11 %>% group_by(chain.type, regist.code) %>% summarise(mean.beds = mean(Total.Beds.k*1000, na.rm = TRUE),
+                                                           total.beds = sum(Total.Beds.k * 1000),
+                                                           n())
+
+data.frame(comp11 %>% group_by(regist.code, chain.type, sector) %>% summarise(mean.beds = mean(Total.Beds.k*1000, na.rm = TRUE), total.beds = sum(Total.Beds.k * 1000), n()))
+
+```
+Of the 5699 nursing homes in the UK, 4986 are for-profit.  These provide 244,382 of the 274,430 beds (or `r 100 * 244382 / 274430`%).
+
+63% of homes in large chains are purpose built.  Average size of  nursing homes in large chains is 59 beds, compared to 40 beds in independents.  Nursing homes are significantly larger than residential care homes. Large chains not necessarily 'corporate'. 
+
+Comparison including ownwership type as well.  There are 79,922 beds in nursing homes in large, for-profit chains (`r 100 * 79992 / 274430`% of the total number of nursing home beds). These are in 1326 facilities (mean size: 60 beds).  There are only 142 non-profit nursing homes that are part of large chains, comprising 6429 beds (or `r 100 * 6429 / 274430`%). 
+
+
+
+# Residential care
+```{r residentialtab}
+
+tab <- xtabs(~chain.type + purpose.built, comp11, subset = regist.code == 'R')
+prop.table(tab, 1)
+```

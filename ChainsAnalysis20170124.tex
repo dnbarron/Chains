@@ -1,0 +1,2215 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Care home chains},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\ImportTok}[1]{{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{{#1}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{{#1}}}}
+\newcommand{\BuiltInTok}[1]{{#1}}
+\newcommand{\ExtensionTok}[1]{{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\NormalTok}[1]{{#1}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{Care home chains}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \author{}
+  \preauthor{}\postauthor{}
+  \predate{\centering\large\emph}
+  \postdate{\par}
+  \date{2017-01-24}
+
+
+\begin{document}
+\maketitle
+
+\section{Introduction}\label{introduction}
+
+The purpose of this analysis is to see if there is evidence of
+performance differences between care homes that are part of chains. The
+hypothesis is that chains that are part of for-profit groups will have
+lower performance but those that are not will have higher performance
+because of learning benefits.
+
+\begin{verbatim}
+## Warning: Missing column names filled in: 'X1' [1]
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: 3531 parsing failures.
+##  row             col               expected actual
+## 1118 res.min.median  no trailing characters     .5
+## 1119 res.min.median  no trailing characters     .5
+## 1119 diff.min.median no trailing characters     .5
+## 1120 res.min.median  no trailing characters     .5
+## 1121 res.min.median  no trailing characters     .5
+## .... ............... ...................... ......
+## See problems(...) for more details.
+\end{verbatim}
+
+\section{Questions}\label{questions}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  How to define chains?
+\item
+  Dichotomous (say, 3 or more = chain)
+\item
+  Size groups (large, medium small)
+\item
+  Count of number (logged?)
+\item
+  Include all homes, or just elderly?
+\item
+  Include local authority homes or not? If yes, are they chains?
+\end{enumerate}
+
+\section{Calculate chain variables}\label{calculate-chain-variables}
+
+First need to do some checking.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{comp11 %>%}\StringTok{ }\KeywordTok{count}\NormalTok{(care.home.group, }\DataTypeTok{sort =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1,196 × 2
+##                care.home.group     n
+##                          <chr> <int>
+## 1                         <NA>  8020
+## 2     Four Seasons Health Care   469
+## 3              Bupa Care Homes   287
+## 4                  Voyage Care   276
+## 5    Barchester Healthcare Ltd   218
+## 6                   HC-One Ltd   214
+## 7                 Priory Group   210
+## 8  CareTech Community Services   125
+## 9                 Caring Homes   120
+## 10                      Anchor   118
+## # ... with 1,186 more rows
+\end{verbatim}
+
+The problem is there are 8020 cases with no \texttt{care.home.group}
+name. Why?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{comp11 %>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(care.home.group)) %>%}\StringTok{ }\KeywordTok{count}\NormalTok{(region)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 12 × 2
+##                            region     n
+##                             <chr> <int>
+## 1                   East Midlands   630
+## 2                 East of England   682
+## 3                  Greater London   667
+## 4                      North East   233
+## 5                      North West   946
+## 6  Northern Ireland & Isle of Man   230
+## 7                        Scotland   343
+## 8                      South East  1320
+## 9                      South West  1057
+## 10                          Wales   615
+## 11                  West Midlands   727
+## 12         Yorkshire & the Humber   570
+\end{verbatim}
+
+No obvious patterns. \textbf{Assume these homes are all independent}.
+Generate a dummy \texttt{care.home.group} name for them so they don't
+seem to be in a chain with 8020 members!
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{comp12 <-}\StringTok{ }\NormalTok{comp11 %>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{care.home.group.new =} \KeywordTok{ifelse}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(care.home.group), }
+    \KeywordTok{paste0}\NormalTok{(}\StringTok{"X"}\NormalTok{, }\KeywordTok{row_number}\NormalTok{()), care.home.group))}
+
+\NormalTok{comp12 %>%}\StringTok{ }\KeywordTok{count}\NormalTok{(care.home.group.new, }\DataTypeTok{sort =} \OtherTok{TRUE}\NormalTok{) %>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(n >=}\StringTok{ }\DecValTok{20}\NormalTok{) %>%}\StringTok{ }\KeywordTok{print}\NormalTok{() %>%}\StringTok{ }
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \NormalTok{forcats::}\KeywordTok{fct_reorder}\NormalTok{(care.home.group.new, n), }\DataTypeTok{y =} \NormalTok{n)) +}\StringTok{ }\KeywordTok{geom_point}\NormalTok{() +}\StringTok{ }
+\StringTok{    }\KeywordTok{scale_x_discrete}\NormalTok{(}\DataTypeTok{labels =} \OtherTok{NULL}\NormalTok{) +}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x =} \StringTok{"Group"}\NormalTok{, }\DataTypeTok{title =} \StringTok{"Chains with 20 or more members"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 86 × 2
+##            care.home.group.new     n
+##                          <chr> <int>
+## 1     Four Seasons Health Care   469
+## 2              Bupa Care Homes   287
+## 3                  Voyage Care   276
+## 4    Barchester Healthcare Ltd   218
+## 5                   HC-One Ltd   214
+## 6                 Priory Group   210
+## 7  CareTech Community Services   125
+## 8                 Caring Homes   120
+## 9                       Anchor   118
+## 10                     Care UK   111
+## # ... with 76 more rows
+\end{verbatim}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{ChainsAnalysis20170124_files/figure-latex/newgroup-1} \end{center}
+
+Look at the care home group names to see if there are obvious problems
+with typos, etc. (set \texttt{eval=FALSE} so it doesn't run when file
+compiled.)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{comp12 %>%}\StringTok{ }\KeywordTok{count}\NormalTok{(care.home.group.new) %>%}\StringTok{ }\KeywordTok{View}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Descriptive statistics}\label{descriptive-statistics}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{comp12 %>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(care.home.group.new) %>%}\StringTok{ }\KeywordTok{count}\NormalTok{(care.home.group.new) %>%}\StringTok{ }
+\StringTok{    }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{mean =} \KeywordTok{mean}\NormalTok{(n), }\DataTypeTok{median =} \KeywordTok{median}\NormalTok{(n), }\DataTypeTok{q90 =} \KeywordTok{quantile}\NormalTok{(n, }\DataTypeTok{probs =} \FloatTok{0.9}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 × 3
+##       mean median   q90
+##      <dbl>  <int> <dbl>
+## 1 2.118068      1     3
+\end{verbatim}
+
+\subsection{Continuous}\label{continuous}
+
+This variable is based on \texttt{care.home.group.new}. The new variable
+\texttt{chain\_size} is calculated as the number of care homes with the
+same group name.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{comp12 <-}\StringTok{ }\NormalTok{comp12 %>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(care.home.group.new) %>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{chain_size =} \KeywordTok{n}\NormalTok{()) %>%}\StringTok{ }
+\StringTok{    }\KeywordTok{ungroup}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+Test
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{comp12 %>%}\StringTok{ }\KeywordTok{count}\NormalTok{(chain_size, }\DataTypeTok{sort =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 71 × 2
+##    chain_size     n
+##         <int> <int>
+## 1           1  8061
+## 2           3   957
+## 3           4   804
+## 4           5   625
+## 5           6   564
+## 6         469   469
+## 7           7   413
+## 8          11   396
+## 9           8   360
+## 10         10   330
+## # ... with 61 more rows
+\end{verbatim}
+
+Looks OK. Calculate \texttt{log(chain\_size})
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{comp12 <-}\StringTok{ }\NormalTok{comp12 %>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{log_chain_size =} \KeywordTok{log}\NormalTok{(chain_size))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{comp12 %>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \NormalTok{log_chain_size)) +}\StringTok{ }\KeywordTok{geom_density}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{ChainsAnalysis20170124_files/figure-latex/denplot-1} \end{center}
+
+\subsection{Dichotomous}\label{dichotomous}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{comp12 <-}\StringTok{ }\NormalTok{comp12 %>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{in_chain =} \KeywordTok{ifelse}\NormalTok{(chain_size >=}\StringTok{ }\DecValTok{3}\NormalTok{, }\StringTok{"Yes"}\NormalTok{, }\StringTok{"No"}\NormalTok{))}
+
+\NormalTok{comp12 %>%}\StringTok{ }\KeywordTok{count}\NormalTok{(in_chain)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 × 2
+##   in_chain     n
+##      <chr> <int>
+## 1       No  8123
+## 2      Yes 11395
+\end{verbatim}
+
+\subsection{Four categories}\label{four-categories}
+
+\begin{itemize}
+\tightlist
+\item
+  Independent is homes not in a chain
+\item
+  Small is chains with 2-10 members
+\item
+  Medium is chains with 11-70 members
+\item
+  Large is chains with \textgreater{} 70 members
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{comp12 <-}\StringTok{ }\NormalTok{comp12 %>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{chain_type =} \KeywordTok{ifelse}\NormalTok{(chain_size ==}\StringTok{ }\DecValTok{1}\NormalTok{, }\StringTok{"Independent"}\NormalTok{, }
+    \KeywordTok{ifelse}\NormalTok{(chain_size <=}\StringTok{ }\DecValTok{10}\NormalTok{, }\StringTok{"Small"}\NormalTok{, }\KeywordTok{ifelse}\NormalTok{(chain_size <=}\StringTok{ }\DecValTok{70}\NormalTok{, }\StringTok{"Medium"}\NormalTok{, }\StringTok{"Large"}\NormalTok{))))}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Analysis}\label{analysis}
+
+\textbf{Don't include local authority homes.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{comp12.noLA <-}\StringTok{ }\NormalTok{comp12 %>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(sector !=}\StringTok{ "Local Authority"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Create formulas}\label{create-formulas}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dvs <-}\StringTok{ }\KeywordTok{paste0}\NormalTok{(}\StringTok{"chap"}\NormalTok{, }\DecValTok{1}\NormalTok{:}\DecValTok{5}\NormalTok{)}
+\NormalTok{dvs.old <-}\StringTok{ }\KeywordTok{paste0}\NormalTok{(}\StringTok{"chapter"}\NormalTok{, }\DecValTok{1}\NormalTok{:}\DecValTok{5}\NormalTok{, }\StringTok{".old"}\NormalTok{)}
+\NormalTok{dvs.new <-}\StringTok{ }\KeywordTok{paste0}\NormalTok{(}\StringTok{"chapter"}\NormalTok{, }\DecValTok{1}\NormalTok{:}\DecValTok{5}\NormalTok{, }\StringTok{".new"}\NormalTok{)}
+\NormalTok{rhs <-}\StringTok{ " ~ sector + Total.Beds.k + Age.years + purpose.built  + dementia  + OVer.65.m + IDAOPI.score + herf"}
+
+\NormalTok{forms.all <-}\StringTok{ }\KeywordTok{map}\NormalTok{(dvs, ~}\KeywordTok{str_c}\NormalTok{(.x, rhs))}
+\NormalTok{forms.old <-}\StringTok{ }\KeywordTok{map}\NormalTok{(dvs.old, ~}\KeywordTok{str_c}\NormalTok{(.x, rhs))}
+\NormalTok{forms.new <-}\StringTok{ }\KeywordTok{map}\NormalTok{(dvs.new, ~}\KeywordTok{str_c}\NormalTok{(.x, rhs))}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Dichotomous}\label{dichotomous-1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{forms.all.di <-}\StringTok{ }\KeywordTok{map}\NormalTok{(forms.all, ~}\KeywordTok{add_predictors}\NormalTok{(}\KeywordTok{formula}\NormalTok{(.x, }\DataTypeTok{env =} \NormalTok{.GlobalEnv), }
+    \NormalTok{~in_chain))}
+\NormalTok{fit.di <-}\StringTok{ }\NormalTok{comp12.noLA %>%}\StringTok{ }\KeywordTok{fit_with}\NormalTok{(clm, forms.all.di, }\DataTypeTok{Hess =} \OtherTok{TRUE}\NormalTok{)}
+
+\KeywordTok{map}\NormalTok{(fit.di, tidy)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+##                    term     estimate   std.error   statistic       p.value
+## 1       Inadequate|Poor  -4.44684130 0.120059401 -37.0386763 2.732661e-300
+## 2             Poor|Good  -2.36204352 0.110039206 -21.4654722 3.274078e-102
+## 3  sectorNot-For-Profit   0.52389311 0.064436325   8.1304003  4.278751e-16
+## 4          Total.Beds.k -19.25527725 0.973874785 -19.7718203  5.206318e-87
+## 5             Age.years  -0.02490796 0.002882139  -8.6421768  5.515199e-18
+## 6      purpose.builtYes  -0.08414665 0.056582357  -1.4871536  1.369743e-01
+## 7         dementiaOther   0.30691118 0.065691648   4.6719970  2.982853e-06
+## 8             OVer.65.m  -0.56410840 0.839126281  -0.6722569  5.014202e-01
+## 9          IDAOPI.score  -0.17919483 0.210041162  -0.8531415  3.935808e-01
+## 10                 herf  -4.25189861 1.282809135  -3.3145216  9.180008e-04
+## 11          in_chainYes   0.08784008 0.048548870   1.8093125  7.040246e-02
+## 
+## [[2]]
+##                    term     estimate   std.error   statistic      p.value
+## 1       Inadequate|Poor  -4.96814571 0.131922866 -37.6594739 0.000000e+00
+## 2             Poor|Good  -2.34513408 0.113705143 -20.6246966 1.647609e-94
+## 3  sectorNot-For-Profit   0.65366094 0.069849456   9.3581394 8.115313e-21
+## 4          Total.Beds.k -18.35878545 1.013664723 -18.1112996 2.595484e-73
+## 5             Age.years  -0.02204070 0.002997202  -7.3537578 1.927108e-13
+## 6      purpose.builtYes  -0.14720398 0.058870052  -2.5004900 1.240216e-02
+## 7         dementiaOther   0.32701607 0.067826089   4.8213907 1.425608e-06
+## 8             OVer.65.m  -2.09251244 0.854899403  -2.4476710 1.437829e-02
+## 9          IDAOPI.score   0.08837395 0.220894991   0.4000722 6.891033e-01
+## 10                 herf  -2.16852117 1.386231173  -1.5643287 1.177404e-01
+## 11          in_chainYes   0.12846473 0.050641521   2.5367470 1.118878e-02
+## 
+## [[3]]
+##                    term     estimate   std.error    statistic
+## 1       Inadequate|Poor  -5.89249958 0.192088824 -30.67591047
+## 2             Poor|Good  -2.99293864 0.152601711 -19.61274630
+## 3  sectorNot-For-Profit   0.61857483 0.099102593   6.24176231
+## 4          Total.Beds.k -17.90392954 1.272367480 -14.07135111
+## 5             Age.years  -0.02189892 0.004098158  -5.34360096
+## 6      purpose.builtYes  -0.11772737 0.079267261  -1.48519535
+## 7         dementiaOther   0.36215477 0.087885634   4.12075050
+## 8             OVer.65.m   1.25400351 1.237609967   1.01324613
+## 9          IDAOPI.score  -0.02641071 0.301856620  -0.08749421
+## 10                 herf   0.96715400 1.962590499   0.49279460
+## 11          in_chainYes   0.13763785 0.069234467   1.98799603
+##          p.value
+## 1  1.192985e-206
+## 2   1.203544e-85
+## 3   4.326681e-10
+## 4   5.697046e-45
+## 5   9.111804e-08
+## 6   1.374921e-01
+## 7   3.776402e-05
+## 8   3.109426e-01
+## 9   9.302787e-01
+## 10  6.221577e-01
+## 11  4.681213e-02
+## 
+## [[4]]
+##                    term     estimate   std.error   statistic       p.value
+## 1       Inadequate|Poor  -5.34497256 0.145565280 -36.7187324 3.669777e-295
+## 2             Poor|Good  -2.58759239 0.122145541 -21.1845014  1.327233e-99
+## 3  sectorNot-For-Profit   0.70962755 0.076716916   9.2499488  2.246003e-20
+## 4          Total.Beds.k -18.64986878 1.066923520 -17.4800428  2.033464e-68
+## 5             Age.years  -0.02356481 0.003227896  -7.3003606  2.869974e-13
+## 6      purpose.builtYes  -0.19167091 0.062642354  -3.0597654  2.215104e-03
+## 7         dementiaOther   0.32495619 0.071488543   4.5455702  5.478674e-06
+## 8             OVer.65.m  -0.31501958 0.944741877  -0.3334451  7.387983e-01
+## 9          IDAOPI.score  -0.04315824 0.237125190  -0.1820061  8.555779e-01
+## 10                 herf  -1.53575861 1.491920991  -1.0293833  3.032996e-01
+## 11          in_chainYes   0.06872102 0.054509359   1.2607196  2.074099e-01
+## 
+## [[5]]
+##                    term     estimate   std.error   statistic       p.value
+## 1       Inadequate|Poor  -4.36748076 0.122252605 -35.7250526 1.614658e-279
+## 2             Poor|Good  -2.07266623 0.109821959 -18.8729672  1.903066e-79
+## 3  sectorNot-For-Profit   0.64907082 0.067126626   9.6693497  4.069558e-22
+## 4          Total.Beds.k -14.40355826 0.994810990 -14.4786883  1.652200e-47
+## 5             Age.years  -0.01971473 0.002877923  -6.8503328  7.367839e-12
+## 6      purpose.builtYes  -0.13590924 0.057493839  -2.3638922  1.808407e-02
+## 7         dementiaOther   0.29125994 0.066873361   4.3553956  1.328268e-05
+## 8             OVer.65.m  -1.78543423 0.823825652  -2.1672477  3.021597e-02
+## 9          IDAOPI.score  -0.11410971 0.212342177  -0.5373860  5.910010e-01
+## 10                 herf  -0.81830728 1.363251062  -0.6002616  5.483319e-01
+## 11          in_chainYes   0.18075267 0.048725783   3.7095899  2.075952e-04
+\end{verbatim}
+
+\subsubsection{Clustered standard
+errors}\label{clustered-standard-errors}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{hc.di <-}\StringTok{ }\NormalTok{fit.di %>%}\StringTok{ }\KeywordTok{map}\NormalTok{(get_CL_vcov, comp12.noLA$care.home.group.new) %>%}\StringTok{ }\KeywordTok{map}\NormalTok{(~}\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{diag}\NormalTok{(.x)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'zoo'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     as.Date, as.Date.numeric
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{map2}\NormalTok{(fit.di, hc.di, ~}\KeywordTok{tidy}\NormalTok{(.x, }\DataTypeTok{cluster =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{vcov =} \NormalTok{.y))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+##                    term     estimate   std.error   statistic       p.value
+## 1       Inadequate|Poor  -4.44684130 0.121535896 -36.5887072 4.324990e-293
+## 2             Poor|Good  -2.36204352 0.113665277 -20.7806957  6.471412e-96
+## 3  sectorNot-For-Profit   0.52389311 0.076468294   6.8511155  7.327632e-12
+## 4          Total.Beds.k -19.25527725 1.201707633 -16.0232628  8.791355e-58
+## 5             Age.years  -0.02490796 0.003306558  -7.5328964  4.962697e-14
+## 6      purpose.builtYes  -0.08414665 0.057605413  -1.4607421  1.440862e-01
+## 7         dementiaOther   0.30691118 0.070290078   4.3663514  1.263392e-05
+## 8             OVer.65.m  -0.56410840 1.021081255  -0.5524618  5.806320e-01
+## 9          IDAOPI.score  -0.17919483 0.222049500  -0.8070040  4.196642e-01
+## 10                 herf  -4.25189861 1.350705380  -3.1479097  1.644425e-03
+## 11          in_chainYes   0.08784008 0.056643817   1.5507444  1.209630e-01
+## 
+## [[2]]
+##                    term     estimate   std.error   statistic      p.value
+## 1       Inadequate|Poor  -4.96814571 0.132125470 -37.6017260 0.000000e+00
+## 2             Poor|Good  -2.34513408 0.115185980 -20.3595444 3.821205e-92
+## 3  sectorNot-For-Profit   0.65366094 0.077599893   8.4234774 3.654715e-17
+## 4          Total.Beds.k -18.35878545 1.208010919 -15.1975327 3.671927e-52
+## 5             Age.years  -0.02204070 0.003416571  -6.4511159 1.110296e-10
+## 6      purpose.builtYes  -0.14720398 0.062966398  -2.3378180 1.939669e-02
+## 7         dementiaOther   0.32701607 0.071894960   4.5485257 5.402305e-06
+## 8             OVer.65.m  -2.09251244 0.963908795  -2.1708614 2.994165e-02
+## 9          IDAOPI.score   0.08837395 0.230007075   0.3842227 7.008134e-01
+## 10                 herf  -2.16852117 1.523782887  -1.4231169 1.547023e-01
+## 11          in_chainYes   0.12846473 0.059898423   2.1447096 3.197607e-02
+## 
+## [[3]]
+##                    term     estimate   std.error    statistic
+## 1       Inadequate|Poor  -5.89249958 0.180763393 -32.59785889
+## 2             Poor|Good  -2.99293864 0.153585769 -19.48708309
+## 3  sectorNot-For-Profit   0.61857483 0.106836013   5.78994677
+## 4          Total.Beds.k -17.90392954 1.461112635 -12.25362721
+## 5             Age.years  -0.02189892 0.004181329  -5.23731058
+## 6      purpose.builtYes  -0.11772737 0.081097322  -1.45168009
+## 7         dementiaOther   0.36215477 0.089040070   4.06732348
+## 8             OVer.65.m   1.25400351 1.565941324   0.80079853
+## 9          IDAOPI.score  -0.02641071 0.356405898  -0.07410289
+## 10                 herf   0.96715400 2.359569273   0.40988583
+## 11          in_chainYes   0.13763785 0.078011681   1.76432353
+##          p.value
+## 1  4.397991e-233
+## 2   1.413098e-84
+## 3   7.040873e-09
+## 4   1.606467e-34
+## 5   1.629334e-07
+## 6   1.465906e-01
+## 7   4.755621e-05
+## 8   4.232483e-01
+## 9   9.409285e-01
+## 10  6.818897e-01
+## 11  7.767752e-02
+## 
+## [[4]]
+##                    term     estimate   std.error   statistic       p.value
+## 1       Inadequate|Poor  -5.34497256 0.156435421 -34.1672783 7.406921e-256
+## 2             Poor|Good  -2.58759239 0.136099983 -19.0124373  1.345532e-80
+## 3  sectorNot-For-Profit   0.70962755 0.089476077   7.9309193  2.175295e-15
+## 4          Total.Beds.k -18.64986878 1.384283342 -13.4725805  2.267987e-41
+## 5             Age.years  -0.02356481 0.003651251  -6.4539001  1.090077e-10
+## 6      purpose.builtYes  -0.19167091 0.069892735  -2.7423582  6.099979e-03
+## 7         dementiaOther   0.32495619 0.074307284   4.3731405  1.224719e-05
+## 8             OVer.65.m  -0.31501958 1.032941729  -0.3049732  7.603865e-01
+## 9          IDAOPI.score  -0.04315824 0.273473951  -0.1578148  8.746027e-01
+## 10                 herf  -1.53575861 1.686137670  -0.9108145  3.623931e-01
+## 11          in_chainYes   0.06872102 0.066312362   1.0363229  3.000515e-01
+## 
+## [[5]]
+##                    term     estimate   std.error   statistic       p.value
+## 1       Inadequate|Poor  -4.36748076 0.123581893 -35.3407823 1.389101e-273
+## 2             Poor|Good  -2.07266623 0.113985055 -18.1836665  6.952605e-74
+## 3  sectorNot-For-Profit   0.64907082 0.079926778   8.1208180  4.630521e-16
+## 4          Total.Beds.k -14.40355826 1.191624765 -12.0873271  1.232310e-33
+## 5             Age.years  -0.01971473 0.003212423  -6.1370273  8.407995e-10
+## 6      purpose.builtYes  -0.13590924 0.061145947  -2.2227023  2.623588e-02
+## 7         dementiaOther   0.29125994 0.067483764   4.3160003  1.588818e-05
+## 8             OVer.65.m  -1.78543423 1.017401280  -1.7548968  7.927697e-02
+## 9          IDAOPI.score  -0.11410971 0.227348510  -0.5019154  6.157271e-01
+## 10                 herf  -0.81830728 1.563591497  -0.5233511  6.007300e-01
+## 11          in_chainYes   0.18075267 0.060118596   3.0066017  2.641857e-03
+\end{verbatim}
+
+\subsection{Interaction with sector}\label{interaction-with-sector}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{forms.all.di.int <-}\StringTok{ }\KeywordTok{map}\NormalTok{(forms.all.di, ~}\KeywordTok{add_predictors}\NormalTok{(}\KeywordTok{formula}\NormalTok{(.x, }\DataTypeTok{env =} \NormalTok{.GlobalEnv), }
+    \NormalTok{~in_chain:sector))}
+\NormalTok{fit.di.int <-}\StringTok{ }\NormalTok{comp12.noLA %>%}\StringTok{ }\KeywordTok{fit_with}\NormalTok{(clm, forms.all.di.int, }\DataTypeTok{Hess =} \OtherTok{TRUE}\NormalTok{)}
+
+\KeywordTok{map}\NormalTok{(fit.di.int, tidy)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+##                                term     estimate   std.error   statistic
+## 1                   Inadequate|Poor  -4.44750331 0.120107042 -37.0294966
+## 2                         Poor|Good  -2.36272387 0.110094253 -21.4609191
+## 3              sectorNot-For-Profit   0.50138618 0.132609371   3.7809257
+## 4                      Total.Beds.k -19.23669669 0.978600479 -19.6573547
+## 5                         Age.years  -0.02489175 0.002883028  -8.6338908
+## 6                  purpose.builtYes  -0.08396817 0.056588613  -1.4838352
+## 7                     dementiaOther   0.30690820 0.065692397   4.6718984
+## 8                         OVer.65.m  -0.56628075 0.839214548  -0.6747747
+## 9                      IDAOPI.score  -0.17942592 0.210037585  -0.8542563
+## 10                             herf  -4.24958023 1.282748636  -3.3128706
+## 11                      in_chainYes   0.08463856 0.051280158   1.6505128
+## 12 sectorNot-For-Profit:in_chainYes   0.02925637 0.150957810   0.1938050
+##          p.value
+## 1  3.840053e-300
+## 2  3.610949e-102
+## 3   1.562463e-04
+## 4   5.001348e-86
+## 5   5.929961e-18
+## 6   1.378527e-01
+## 7   2.984286e-06
+## 8   4.998189e-01
+## 9   3.929630e-01
+## 10  9.234370e-04
+## 11  9.883810e-02
+## 12  8.463286e-01
+## 
+## [[2]]
+##                                term     estimate   std.error   statistic
+## 1                   Inadequate|Poor  -4.97148072 0.131954411 -37.6757448
+## 2                         Poor|Good  -2.34849313 0.113740929 -20.6477399
+## 3              sectorNot-For-Profit   0.52389865 0.138608346   3.7797050
+## 4                      Total.Beds.k -18.25592892 1.018377520 -17.9264846
+## 5                         Age.years  -0.02195116 0.002996277  -7.3261449
+## 6                  purpose.builtYes  -0.14606572 0.058873495  -2.4810099
+## 7                     dementiaOther   0.32723008 0.067831754   4.8241429
+## 8                         OVer.65.m  -2.10671967 0.855089568  -2.4637415
+## 9                      IDAOPI.score   0.08752177 0.220858195   0.3962804
+## 10                             herf  -2.15438965 1.385692349  -1.5547388
+## 11                      in_chainYes   0.11091102 0.053214296   2.0842335
+## 12 sectorNot-For-Profit:in_chainYes   0.17071735 0.159566720   1.0698807
+##         p.value
+## 1  0.000000e+00
+## 2  1.022947e-94
+## 3  1.570143e-04
+## 4  7.326832e-72
+## 5  2.368677e-13
+## 6  1.310107e-02
+## 7  1.406066e-06
+## 8  1.374952e-02
+## 9  6.918982e-01
+## 10 1.200083e-01
+## 11 3.713894e-02
+## 12 2.846730e-01
+## 
+## [[3]]
+##                                term     estimate   std.error    statistic
+## 1                   Inadequate|Poor  -5.89150800 0.192122623 -30.66535271
+## 2                         Poor|Good  -2.99189634 0.152645850 -19.60024680
+## 3              sectorNot-For-Profit   0.67629302 0.207264919   3.26294013
+## 4                      Total.Beds.k -17.94721417 1.279501290 -14.02672612
+## 5                         Age.years  -0.02194056 0.004101823  -5.34897707
+## 6                  purpose.builtYes  -0.11812929 0.079284923  -1.48993380
+## 7                     dementiaOther   0.36214509 0.087884149   4.12071002
+## 8                         OVer.65.m   1.25891379 1.237669329   1.01716489
+## 9                      IDAOPI.score  -0.02608042 0.301891347  -0.08639007
+## 10                             herf   0.96152281 1.962794140   0.48987451
+## 11                      in_chainYes   0.14456541 0.072563084   1.99227216
+## 12 sectorNot-For-Profit:in_chainYes  -0.07516264 0.235522190  -0.31913189
+##          p.value
+## 1  1.649736e-206
+## 2   1.538758e-85
+## 3   1.102628e-03
+## 4   1.069772e-44
+## 5   8.845275e-08
+## 6   1.362416e-01
+## 7   3.777066e-05
+## 8   3.090750e-01
+## 9   9.311563e-01
+## 10  6.242227e-01
+## 11  4.634120e-02
+## 12  7.496265e-01
+## 
+## [[4]]
+##                                term     estimate   std.error   statistic
+## 1                   Inadequate|Poor  -5.34618390 0.145593755 -36.7198710
+## 2                         Poor|Good  -2.58882669 0.122181775 -21.1883213
+## 3              sectorNot-For-Profit   0.65503278 0.158497855   4.1327549
+## 4                      Total.Beds.k -18.61017574 1.071796298 -17.3635380
+## 5                         Age.years  -0.02352724 0.003228316  -7.2877765
+## 6                  purpose.builtYes  -0.19125745 0.062647379  -3.0529202
+## 7                     dementiaOther   0.32499160 0.071490955   4.5459121
+## 8                         OVer.65.m  -0.31992870 0.944861823  -0.3385984
+## 9                      IDAOPI.score  -0.04348242 0.237108117  -0.1833865
+## 10                             herf  -1.53099521 1.491739824  -1.0263152
+## 11                      in_chainYes   0.06208682 0.057078999   1.0877350
+## 12 sectorNot-For-Profit:in_chainYes   0.07061114 0.180367878   0.3914840
+##          p.value
+## 1  3.519398e-295
+## 2   1.223834e-99
+## 3   3.584410e-05
+## 4   1.558185e-67
+## 5   3.151121e-13
+## 6   2.266262e-03
+## 7   5.469787e-06
+## 8   7.349123e-01
+## 9   8.544948e-01
+## 10  3.047430e-01
+## 11  2.767121e-01
+## 12  6.954395e-01
+## 
+## [[5]]
+##                                term     estimate   std.error   statistic
+## 1                   Inadequate|Poor  -4.36655296 0.122294273 -35.7052938
+## 2                         Poor|Good  -2.07170885 0.109871459 -18.8557507
+## 3              sectorNot-For-Profit   0.68556748 0.138819662   4.9385474
+## 4                      Total.Beds.k -14.43287834 0.999517691 -14.4398428
+## 5                         Age.years  -0.01973582 0.002879353  -6.8542543
+## 6                  purpose.builtYes  -0.13620492 0.057504717  -2.3685869
+## 7                     dementiaOther   0.29122897 0.066873046   4.3549530
+## 8                         OVer.65.m  -1.78179949 0.823903533  -2.1626312
+## 9                      IDAOPI.score  -0.11392790 0.212355843  -0.5364952
+## 10                             herf  -0.82212950 1.363474640  -0.6029665
+## 11                      in_chainYes   0.18559827 0.051314999   3.6168425
+## 12 sectorNot-For-Profit:in_chainYes  -0.04760702 0.157946435  -0.3014124
+##          p.value
+## 1  3.271885e-279
+## 2   2.635710e-79
+## 3   7.870665e-07
+## 4   2.905039e-47
+## 5   7.168548e-12
+## 6   1.785618e-02
+## 7   1.330955e-05
+## 8   3.056956e-02
+## 9   5.916163e-01
+## 10  5.465310e-01
+## 11  2.982186e-04
+## 12  7.631000e-01
+\end{verbatim}
+
+\subsection{Three levels of chain
+size}\label{three-levels-of-chain-size}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{forms.all.tri <-}\StringTok{ }\KeywordTok{map}\NormalTok{(forms.all, ~}\KeywordTok{add_predictors}\NormalTok{(}\KeywordTok{formula}\NormalTok{(.x, }\DataTypeTok{env =} \NormalTok{.GlobalEnv), }
+    \NormalTok{~chain_type))}
+\NormalTok{fit.tri <-}\StringTok{ }\NormalTok{comp12.noLA %>%}\StringTok{ }\KeywordTok{fit_with}\NormalTok{(clm, forms.all.tri, }\DataTypeTok{Hess =} \OtherTok{TRUE}\NormalTok{)}
+
+\NormalTok{hc.tri <-}\StringTok{ }\KeywordTok{map}\NormalTok{(fit.tri, ~}\KeywordTok{get_CL_vcov}\NormalTok{(.x, comp12.noLA$care.home.group.new))}
+\KeywordTok{map2}\NormalTok{(fit.tri, hc.tri, ~}\KeywordTok{tidy}\NormalTok{(.x, }\DataTypeTok{cluster =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{vcov =} \NormalTok{.y))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+##                    term     estimate   std.error   statistic       p.value
+## 1       Inadequate|Poor  -4.44266594 0.122352250 -36.3104557 1.106561e-288
+## 2             Poor|Good  -2.35755367 0.113116461 -20.8418266  1.808069e-96
+## 3  sectorNot-For-Profit   0.50284370 0.076001060   6.6162722  3.683698e-11
+## 4          Total.Beds.k -19.44910857 1.148453766 -16.9350384  2.481966e-64
+## 5             Age.years  -0.02442127 0.003287571  -7.4283626  1.099502e-13
+## 6      purpose.builtYes  -0.09310906 0.058612799  -1.5885448  1.121632e-01
+## 7         dementiaOther   0.30473473 0.070383767   4.3296167  1.493691e-05
+## 8             OVer.65.m  -0.55980614 1.021385449  -0.5480851  5.836335e-01
+## 9          IDAOPI.score  -0.17483605 0.221487885  -0.7893707  4.298954e-01
+## 10                 herf  -4.19106494 1.346972616  -3.1114700  1.861584e-03
+## 11      chain_typeLarge   0.10709156 0.100765512   1.0627799  2.878818e-01
+## 12     chain_typeMedium   0.17723019 0.081770813   2.1674017  3.020424e-02
+## 13      chain_typeSmall   0.02261545 0.068118013   0.3320039  7.398863e-01
+## 
+## [[2]]
+##                    term     estimate   std.error   statistic      p.value
+## 1       Inadequate|Poor  -4.96390758 0.132043865 -37.5928679 0.000000e+00
+## 2             Poor|Good  -2.34082925 0.114191956 -20.4990730 2.194336e-93
+## 3  sectorNot-For-Profit   0.64424010 0.077767262   8.2842069 1.188987e-16
+## 4          Total.Beds.k -18.43306738 1.171100883 -15.7399483 8.050940e-56
+## 5             Age.years  -0.02181686 0.003409521  -6.3988054 1.565973e-10
+## 6      purpose.builtYes  -0.14998857 0.063382437  -2.3664058 1.796175e-02
+## 7         dementiaOther   0.32635085 0.071890396   4.5395612 5.637143e-06
+## 8             OVer.65.m  -2.08969312 0.960277403  -2.1761348 2.954518e-02
+## 9          IDAOPI.score   0.08934101 0.229514622   0.3892607 6.970833e-01
+## 10                 herf  -2.14382818 1.522332102  -1.4082526 1.590563e-01
+## 11      chain_typeLarge   0.13266458 0.109500554   1.2115425 2.256876e-01
+## 12     chain_typeMedium   0.16723142 0.084173585   1.9867446 4.695070e-02
+## 13      chain_typeSmall   0.10959526 0.070084548   1.5637578 1.178744e-01
+## 
+## [[3]]
+##                    term     estimate   std.error    statistic
+## 1       Inadequate|Poor  -5.90206992 0.179903314 -32.80689944
+## 2             Poor|Good  -3.00264179 0.152905189 -19.63727859
+## 3  sectorNot-For-Profit   0.61029926 0.109833520   5.55658478
+## 4          Total.Beds.k -18.18518254 1.326434208 -13.70982626
+## 5             Age.years  -0.02173963 0.004199451  -5.17678057
+## 6      purpose.builtYes  -0.12880004 0.083827130  -1.53649586
+## 7         dementiaOther   0.35922495 0.089777878   4.00126356
+## 8             OVer.65.m   1.24598519 1.558659856   0.79939519
+## 9          IDAOPI.score  -0.02184342 0.355211372  -0.06149414
+## 10                 herf   0.90511958 2.347561700   0.38555731
+## 11      chain_typeLarge   0.20367492 0.138674198   1.46872975
+## 12     chain_typeMedium   0.16510609 0.107094342   1.54168831
+## 13      chain_typeSmall   0.07331929 0.093356370   0.78536992
+##          p.value
+## 1  4.694537e-236
+## 2   7.427320e-86
+## 3   2.751041e-08
+## 4   8.866990e-43
+## 5   2.257475e-07
+## 6   1.244168e-01
+## 7   6.300513e-05
+## 8   4.240613e-01
+## 9   9.509657e-01
+## 10  6.998246e-01
+## 11  1.419061e-01
+## 12  1.231494e-01
+## 13  4.322367e-01
+## 
+## [[4]]
+##                    term     estimate   std.error   statistic       p.value
+## 1       Inadequate|Poor  -5.34419729 0.155015888 -34.4751583 1.890771e-260
+## 2             Poor|Good  -2.58686780 0.135496188 -19.0918124  2.953426e-81
+## 3  sectorNot-For-Profit   0.69966140 0.090568817   7.7251909  1.116858e-14
+## 4          Total.Beds.k -18.79081421 1.288756002 -14.5805833  3.733135e-48
+## 5             Age.years  -0.02333310 0.003652446  -6.3883501  1.676851e-10
+## 6      purpose.builtYes  -0.19802878 0.072572879  -2.7286885  6.358673e-03
+## 7         dementiaOther   0.32354700 0.074476733   4.3442695  1.397399e-05
+## 8             OVer.65.m  -0.31428206 1.028485807  -0.3055774  7.599264e-01
+## 9          IDAOPI.score  -0.04044712 0.273023753  -0.1481451  8.822283e-01
+## 10                 herf  -1.53376154 1.691813802  -0.9065782  3.646299e-01
+## 11      chain_typeLarge   0.09380794 0.121117079   0.7745228  4.386217e-01
+## 12     chain_typeMedium   0.10854380 0.092873683   1.1687251  2.425144e-01
+## 13      chain_typeSmall   0.03262953 0.079613325   0.4098501  6.819159e-01
+## 
+## [[5]]
+##                    term     estimate   std.error   statistic       p.value
+## 1       Inadequate|Poor  -4.37336649 0.124384694 -35.1600052 8.174907e-271
+## 2             Poor|Good  -2.07840556 0.113938627 -18.2414482  2.419620e-74
+## 3  sectorNot-For-Profit   0.63582542 0.081249518   7.8255901  5.052812e-15
+## 4          Total.Beds.k -14.73103325 1.120192800 -13.1504445  1.691770e-39
+## 5             Age.years  -0.01941393 0.003195984  -6.0744779  1.243918e-09
+## 6      purpose.builtYes  -0.14945130 0.062188445  -2.4032004  1.625228e-02
+## 7         dementiaOther   0.28778904 0.067904421   4.2381488  2.253704e-05
+## 8             OVer.65.m  -1.79294164 1.012927365  -1.7700594  7.671724e-02
+## 9          IDAOPI.score  -0.10845713 0.225521139  -0.4809178  6.305749e-01
+## 10                 herf  -0.85230703 1.561774098  -0.5457300  5.852515e-01
+## 11      chain_typeLarge   0.25966448 0.115021449   2.2575309  2.397492e-02
+## 12     chain_typeMedium   0.22501110 0.084666917   2.6576036  7.869840e-03
+## 13      chain_typeSmall   0.10887134 0.068905312   1.5800138  1.141037e-01
+\end{verbatim}
+
+\subsubsection{With interaction}\label{with-interaction}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{forms.all.tri.int <-}\StringTok{ }\KeywordTok{map}\NormalTok{(forms.all.tri, ~}\KeywordTok{add_predictors}\NormalTok{(}\KeywordTok{formula}\NormalTok{(.x, }\DataTypeTok{env =} \NormalTok{.GlobalEnv), }
+    \NormalTok{~chain_type:sector))}
+\NormalTok{fit.tri.int <-}\StringTok{ }\NormalTok{comp12.noLA %>%}\StringTok{ }\KeywordTok{fit_with}\NormalTok{(clm, forms.all.tri.int, }\DataTypeTok{Hess =} \OtherTok{TRUE}\NormalTok{)}
+
+\NormalTok{hc.tri.int <-}\StringTok{ }\KeywordTok{map}\NormalTok{(fit.tri.int, ~}\KeywordTok{get_CL_vcov}\NormalTok{(.x, comp12.noLA$care.home.group.new))}
+\KeywordTok{map2}\NormalTok{(fit.tri.int, hc.tri.int, ~}\KeywordTok{tidy}\NormalTok{(.x, }\DataTypeTok{cluster =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{vcov =} \NormalTok{.y))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+##                                     term     estimate   std.error
+## 1                        Inadequate|Poor  -4.44707470 0.122662445
+## 2                              Poor|Good  -2.36223131 0.113139870
+## 3                   sectorNot-For-Profit   0.47441777 0.134777684
+## 4                           Total.Beds.k -19.44374744 1.138042301
+## 5                              Age.years  -0.02443064 0.003281471
+## 6                       purpose.builtYes  -0.09258668 0.058391487
+## 7                          dementiaOther   0.30305498 0.070428141
+## 8                              OVer.65.m  -0.58409774 1.014950664
+## 9                           IDAOPI.score  -0.17249452 0.220947510
+## 10                                  herf  -4.23662496 1.346090684
+## 11                       chain_typeLarge   0.12502278 0.118241105
+## 12                      chain_typeMedium   0.15535160 0.094326913
+## 13                       chain_typeSmall   0.01202887 0.073732529
+## 14  sectorNot-For-Profit:chain_typeLarge  -0.07796127 0.201901949
+## 15 sectorNot-For-Profit:chain_typeMedium   0.09136826 0.205460553
+## 16  sectorNot-For-Profit:chain_typeSmall   0.08184268 0.198616172
+##      statistic       p.value
+## 1  -36.2545742 8.417522e-288
+## 2  -20.8788583  8.335989e-97
+## 3    3.5200024  4.315429e-04
+## 4  -17.0852590  1.910929e-65
+## 5   -7.4450271  9.692450e-14
+## 6   -1.5856194  1.128257e-01
+## 7    4.3030382  1.684718e-05
+## 8   -0.5754937  5.649574e-01
+## 9   -0.7807036  4.349768e-01
+## 10  -3.1473548  1.647549e-03
+## 11   1.0573547  2.903498e-01
+## 12   1.6469489  9.956856e-02
+## 13   0.1631419  8.704067e-01
+## 14  -0.3861343  6.993972e-01
+## 15   0.4446998  6.565367e-01
+## 16   0.4120645  6.802921e-01
+## 
+## [[2]]
+##                                     term     estimate   std.error
+## 1                        Inadequate|Poor  -4.97371440 0.132522526
+## 2                              Poor|Good  -2.35095403 0.114258070
+## 3                   sectorNot-For-Profit   0.49706004 0.138463859
+## 4                           Total.Beds.k -18.33628826 1.157878883
+## 5                              Age.years  -0.02178517 0.003393068
+## 6                       purpose.builtYes  -0.14778269 0.063069341
+## 7                          dementiaOther   0.32400987 0.071668805
+## 8                              OVer.65.m  -2.14463583 0.956799800
+## 9                           IDAOPI.score   0.09195183 0.229010666
+## 10                                  herf  -2.19407775 1.523399487
+## 11                       chain_typeLarge   0.14363431 0.125973584
+## 12                      chain_typeMedium   0.11403607 0.095297454
+## 13                       chain_typeSmall   0.08600980 0.074991677
+## 14  sectorNot-For-Profit:chain_typeLarge   0.01475337 0.214943867
+## 15 sectorNot-For-Profit:chain_typeMedium   0.29701692 0.204080871
+## 16  sectorNot-For-Profit:chain_typeSmall   0.24348540 0.211030450
+##       statistic      p.value
+## 1  -37.53108649 0.000000e+00
+## 2  -20.57582478 4.519764e-94
+## 3    3.58981793 3.309090e-04
+## 4  -15.83610215 1.753594e-56
+## 5   -6.42049398 1.358328e-10
+## 6   -2.34317802 1.912026e-02
+## 7    4.52093302 6.156767e-06
+## 8   -2.24146769 2.499580e-02
+## 9    0.40151766 6.880390e-01
+## 10  -1.44025108 1.497964e-01
+## 11   1.14019384 2.542056e-01
+## 12   1.19663288 2.314497e-01
+## 13   1.14692466 2.514128e-01
+## 14   0.06863826 9.452776e-01
+## 15   1.45538833 1.455618e-01
+## 16   1.15379272 2.485852e-01
+## 
+## [[3]]
+##                                     term     estimate   std.error
+## 1                        Inadequate|Poor  -5.90098010 0.179652647
+## 2                              Poor|Good  -3.00140896 0.152456146
+## 3                   sectorNot-For-Profit   0.64069718 0.210379448
+## 4                           Total.Beds.k -18.11248483 1.334224372
+## 5                              Age.years  -0.02180692 0.004209549
+## 6                       purpose.builtYes  -0.12724032 0.084190249
+## 7                          dementiaOther   0.36026658 0.090037437
+## 8                              OVer.65.m   1.18167750 1.550106040
+## 9                           IDAOPI.score  -0.03062797 0.355233976
+## 10                                  herf   1.03054262 2.333497652
+## 11                       chain_typeLarge   0.19584581 0.152361461
+## 12                      chain_typeMedium   0.11888435 0.117463743
+## 13                       chain_typeSmall   0.12073048 0.099941735
+## 14  sectorNot-For-Profit:chain_typeLarge   0.01620933 0.338336365
+## 15 sectorNot-For-Profit:chain_typeMedium   0.15612138 0.279518276
+## 16  sectorNot-For-Profit:chain_typeSmall  -0.34157744 0.303704724
+##       statistic       p.value
+## 1  -32.84660826 1.273387e-236
+## 2  -19.68703154  2.785417e-86
+## 3    3.04543618  2.323431e-03
+## 4  -13.57529154  5.611996e-42
+## 5   -5.18034510  2.214758e-07
+## 6   -1.51134273  1.307012e-01
+## 7    4.00129759  6.299607e-05
+## 8    0.76232043  4.458688e-01
+## 9   -0.08621914  9.312922e-01
+## 10   0.44163002  6.587570e-01
+## 11   1.28540252  1.986517e-01
+## 12   1.01209399  3.114931e-01
+## 13   1.20800864  2.270439e-01
+## 14   0.04790892  9.617888e-01
+## 15   0.55853730  5.764775e-01
+## 16  -1.12470242  2.607152e-01
+## 
+## [[4]]
+##                                     term     estimate   std.error
+## 1                        Inadequate|Poor  -5.34784896 0.154633702
+## 2                              Poor|Good  -2.59057659 0.135356636
+## 3                   sectorNot-For-Profit   0.62510833 0.159840383
+## 4                           Total.Beds.k -18.70728965 1.287961855
+## 5                              Age.years  -0.02333217 0.003648699
+## 6                       purpose.builtYes  -0.19599052 0.072565835
+## 7                          dementiaOther   0.32331436 0.074785459
+## 8                              OVer.65.m  -0.36661078 1.028005867
+## 9                           IDAOPI.score  -0.04322562 0.272745180
+## 10                                  herf  -1.48959570 1.682225630
+## 11                       chain_typeLarge   0.08997717 0.136716043
+## 12                      chain_typeMedium   0.06384150 0.104877353
+## 13                       chain_typeSmall   0.04331584 0.085218933
+## 14  sectorNot-For-Profit:chain_typeLarge   0.05355867 0.251927220
+## 15 sectorNot-For-Profit:chain_typeMedium   0.22208197 0.236186197
+## 16  sectorNot-For-Profit:chain_typeSmall  -0.03703918 0.243324090
+##      statistic       p.value
+## 1  -34.5839807 4.399182e-262
+## 2  -19.1388962  1.197809e-81
+## 3    3.9108285  9.198006e-05
+## 4  -14.5247234  8.448266e-48
+## 5   -6.3946534  1.609119e-10
+## 6   -2.7008649  6.915942e-03
+## 7    4.3232249  1.537648e-05
+## 8   -0.3566232  7.213739e-01
+## 9   -0.1584836  8.740758e-01
+## 10  -0.8854910  3.758919e-01
+## 11   0.6581318  5.104535e-01
+## 12   0.6087253  5.427065e-01
+## 13   0.5082889  6.112508e-01
+## 14   0.2125958  8.316423e-01
+## 15   0.9402834  3.470722e-01
+## 16  -0.1522216  8.790122e-01
+## 
+## [[5]]
+##                                     term     estimate   std.error
+## 1                        Inadequate|Poor  -4.37593943 0.124589574
+## 2                              Poor|Good  -2.08100929 0.113993633
+## 3                   sectorNot-For-Profit   0.66494100 0.138972932
+## 4                           Total.Beds.k -14.75110662 1.112107752
+## 5                              Age.years  -0.01946100 0.003185592
+## 6                       purpose.builtYes  -0.14928954 0.061922311
+## 7                          dementiaOther   0.28637573 0.068153060
+## 8                              OVer.65.m  -1.82620285 1.008862373
+## 9                           IDAOPI.score  -0.10746575 0.224801240
+## 10                                  herf  -0.87295581 1.559365146
+## 11                       chain_typeLarge   0.28213900 0.132323420
+## 12                      chain_typeMedium   0.20301223 0.097083547
+## 13                       chain_typeSmall   0.11516511 0.074203735
+## 14  sectorNot-For-Profit:chain_typeLarge  -0.14609385 0.237546802
+## 15 sectorNot-For-Profit:chain_typeMedium   0.05036614 0.202846481
+## 16  sectorNot-For-Profit:chain_typeSmall  -0.05966542 0.206669992
+##      statistic       p.value
+## 1  -35.1228379 3.021190e-270
+## 2  -18.2554870  1.871348e-74
+## 3    4.7846800  1.712600e-06
+## 4  -13.2640984  3.738907e-40
+## 5   -6.1090675  1.002150e-09
+## 6   -2.4109168  1.591248e-02
+## 7    4.2019498  2.646258e-05
+## 8   -1.8101605  7.027090e-02
+## 9   -0.4780479  6.326161e-01
+## 10  -0.5598149  5.756057e-01
+## 11   2.1321925  3.299103e-02
+## 12   2.0911085  3.651834e-02
+## 13   1.5520122  1.206593e-01
+## 14  -0.6150108  5.385476e-01
+## 15   0.2482969  8.039047e-01
+## 16  -0.2886990  7.728117e-01
+\end{verbatim}
+
+\subsection{Continuous, logged}\label{continuous-logged}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{forms.all.cont <-}\StringTok{ }\KeywordTok{map}\NormalTok{(forms.all, ~}\KeywordTok{add_predictors}\NormalTok{(}\KeywordTok{formula}\NormalTok{(.x, }\DataTypeTok{env =} \NormalTok{.GlobalEnv), }
+    \NormalTok{~log_chain_size))}
+\NormalTok{fit.cont <-}\StringTok{ }\NormalTok{comp12.noLA %>%}\StringTok{ }\KeywordTok{fit_with}\NormalTok{(clm, forms.all.cont, }\DataTypeTok{Hess =} \OtherTok{TRUE}\NormalTok{)}
+
+\NormalTok{hc.cont <-}\StringTok{ }\KeywordTok{map}\NormalTok{(fit.cont, ~}\KeywordTok{get_CL_vcov}\NormalTok{(.x, comp12.noLA$care.home.group.new))}
+\KeywordTok{map2}\NormalTok{(fit.cont, hc.cont, ~}\KeywordTok{tidy}\NormalTok{(.x, }\DataTypeTok{cluster =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{vcov =} \NormalTok{.y))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+##                    term     estimate   std.error   statistic      p.value
+## 1       Inadequate|Poor  -4.46520907 0.118721024 -37.6109380 0.000000e+00
+## 2             Poor|Good  -2.38070537 0.112871606 -21.0921547 9.388655e-99
+## 3  sectorNot-For-Profit   0.53076674 0.078162566   6.7905491 1.117076e-11
+## 4          Total.Beds.k -19.37705969 1.109973771 -17.4572230 3.033353e-68
+## 5             Age.years  -0.02504245 0.003224613  -7.7660307 8.098392e-15
+## 6      purpose.builtYes  -0.08937430 0.058355303  -1.5315541 1.256325e-01
+## 7         dementiaOther   0.30351463 0.070212832   4.3227801 1.540753e-05
+## 8             OVer.65.m  -0.57275928 1.021340802  -0.5607915 5.749397e-01
+## 9          IDAOPI.score  -0.17587924 0.220948778  -0.7960181 4.260215e-01
+## 10                 herf  -4.27915225 1.346157624  -3.1787899 1.478912e-03
+## 11       log_chain_size   0.02246606 0.020094404   1.1180257 2.635560e-01
+## 
+## [[2]]
+##                    term     estimate   std.error   statistic      p.value
+## 1       Inadequate|Poor  -5.00379768 0.131375964 -38.0876190 0.000000e+00
+## 2             Poor|Good  -2.38135948 0.115151762 -20.6801827 5.224259e-95
+## 3  sectorNot-For-Profit   0.66889692 0.079305827   8.4343981 3.329117e-17
+## 4          Total.Beds.k -18.41420097 1.141470485 -16.1319992 1.520187e-58
+## 5             Age.years  -0.02246030 0.003374256  -6.6563697 2.806738e-11
+## 6      purpose.builtYes  -0.15058010 0.063316745  -2.3782035 1.739722e-02
+## 7         dementiaOther   0.32244542 0.071902576   4.4844766 7.309312e-06
+## 8             OVer.65.m  -2.10769703 0.964071917  -2.1862446 2.879771e-02
+## 9          IDAOPI.score   0.09156307 0.228444022   0.4008118 6.885587e-01
+## 10                 herf  -2.21546399 1.518911317  -1.4585868 1.446789e-01
+## 11       log_chain_size   0.02700458 0.021320855   1.2665808 2.053052e-01
+## 
+## [[3]]
+##                    term     estimate   std.error    statistic
+## 1       Inadequate|Poor  -5.92397929 0.181070501 -32.71642401
+## 2             Poor|Good  -3.02472998 0.152389479 -19.84867989
+## 3  sectorNot-For-Profit   0.62927931 0.109483020   5.74773431
+## 4          Total.Beds.k -18.12262588 1.290511882 -14.04297483
+## 5             Age.years  -0.02215093 0.004069371  -5.44333022
+## 6      purpose.builtYes  -0.12575301 0.084790816  -1.48309704
+## 7         dementiaOther   0.35680121 0.089826790   3.97210246
+## 8             OVer.65.m   1.23908999 1.566132982   0.79117802
+## 9          IDAOPI.score  -0.02400115 0.354645516  -0.06767647
+## 10                 herf   0.88481770 2.349823699   0.37654642
+## 11       log_chain_size   0.03534337 0.027838558   1.26958335
+##          p.value
+## 1  9.122066e-235
+## 2   1.131343e-87
+## 3   9.044722e-09
+## 4   8.506549e-45
+## 5   5.229357e-08
+## 6   1.380486e-01
+## 7   7.124106e-05
+## 8   4.288401e-01
+## 9   9.460432e-01
+## 10  7.065107e-01
+## 11  2.042331e-01
+## 
+## [[4]]
+##                    term     estimate   std.error   statistic       p.value
+## 1       Inadequate|Poor  -5.35855842 0.153938911 -34.8096423 1.738357e-265
+## 2             Poor|Good  -2.60138926 0.132904247 -19.5734096  2.606464e-85
+## 3  sectorNot-For-Profit   0.71424868 0.089483470   7.9819064  1.440903e-15
+## 4          Total.Beds.k -18.76812909 1.241797830 -15.1136752  1.315910e-51
+## 5             Age.years  -0.02364883 0.003587754  -6.5915404  4.352864e-11
+## 6      purpose.builtYes  -0.19668847 0.073183717  -2.6875989  7.196780e-03
+## 7         dementiaOther   0.32235163 0.074375214   4.3341270  1.463397e-05
+## 8             OVer.65.m  -0.32342251 1.031912211  -0.3134206  7.539612e-01
+## 9          IDAOPI.score  -0.04095625 0.272475757  -0.1503115  8.805188e-01
+## 10                 herf  -1.57281831 1.685143501  -0.9333438  3.506425e-01
+## 11       log_chain_size   0.01858084 0.022514726   0.8252748  4.092156e-01
+## 
+## [[5]]
+##                    term     estimate   std.error   statistic       p.value
+## 1       Inadequate|Poor  -4.40172108 0.122355647 -35.9748095 2.072471e-283
+## 2             Poor|Good  -2.10708872 0.112419285 -18.7431251  2.203009e-78
+## 3  sectorNot-For-Profit   0.66074506 0.081961429   8.0616586  7.526617e-16
+## 4          Total.Beds.k -14.69678764 1.083527702 -13.5638319  6.561663e-42
+## 5             Age.years  -0.01991326 0.003146541  -6.3286198  2.473638e-10
+## 6      purpose.builtYes  -0.14843752 0.062423497  -2.3779110  1.741103e-02
+## 7         dementiaOther   0.28436566 0.067834627   4.1920429  2.764537e-05
+## 8             OVer.65.m  -1.80588684 1.017338947  -1.7751083  7.588000e-02
+## 9          IDAOPI.score  -0.10831434 0.224781274  -0.4818655  6.299015e-01
+## 10                 herf  -0.89946909 1.554640088  -0.5785706  5.628789e-01
+## 11       log_chain_size   0.04910300 0.022450916   2.1871265  2.873329e-02
+\end{verbatim}
+
+\subsubsection{With interaction}\label{with-interaction-1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{forms.all.cont.int <-}\StringTok{ }\KeywordTok{map}\NormalTok{(forms.all.cont, ~}\KeywordTok{add_predictors}\NormalTok{(}\KeywordTok{formula}\NormalTok{(.x, }\DataTypeTok{env =} \NormalTok{.GlobalEnv), }
+    \NormalTok{~log_chain_size:sector))}
+\NormalTok{fit.cont.int <-}\StringTok{ }\NormalTok{comp12.noLA %>%}\StringTok{ }\KeywordTok{fit_with}\NormalTok{(clm, forms.all.cont.int, }\DataTypeTok{Hess =} \OtherTok{TRUE}\NormalTok{)}
+
+\NormalTok{hc.cont.int <-}\StringTok{ }\KeywordTok{map}\NormalTok{(fit.cont.int, ~}\KeywordTok{get_CL_vcov}\NormalTok{(.x, comp12.noLA$care.home.group.new))}
+\KeywordTok{map2}\NormalTok{(fit.cont.int, hc.cont.int, ~}\KeywordTok{tidy}\NormalTok{(.x, }\DataTypeTok{cluster =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{vcov =} \NormalTok{.y))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+##                                   term     estimate   std.error
+## 1                      Inadequate|Poor  -4.46484508 0.118881461
+## 2                            Poor|Good  -2.38033932 0.113136823
+## 3                 sectorNot-For-Profit   0.58601042 0.119345139
+## 4                         Total.Beds.k -19.43327976 1.103722441
+## 5                            Age.years  -0.02509661 0.003220499
+## 6                     purpose.builtYes  -0.08969089 0.058292637
+## 7                        dementiaOther   0.30323837 0.070133918
+## 8                            OVer.65.m  -0.56940367 1.022510690
+## 9                         IDAOPI.score  -0.17530447 0.220871420
+## 10                                herf  -4.31198161 1.344651421
+## 11                      log_chain_size   0.02489962 0.022359614
+## 12 sectorNot-For-Profit:log_chain_size  -0.02243382 0.043548292
+##      statistic      p.value
+## 1  -37.5571182 0.000000e+00
+## 2  -21.0394747 2.855230e-98
+## 3    4.9102161 9.097607e-07
+## 4  -17.6070351 2.175457e-69
+## 5   -7.7927709 6.555541e-15
+## 6   -1.5386315 1.238943e-01
+## 7    4.3237050 1.534304e-05
+## 8   -0.5568682 5.776175e-01
+## 9   -0.7936947 4.273732e-01
+## 10  -3.2067654 1.342364e-03
+## 11   1.1135980 2.654517e-01
+## 12  -0.5151481 6.064495e-01
+## 
+## [[2]]
+##                                   term     estimate   std.error
+## 1                      Inadequate|Poor  -5.00372840 0.131448000
+## 2                            Poor|Good  -2.38129826 0.115274991
+## 3                 sectorNot-For-Profit   0.68680937 0.128488238
+## 4                         Total.Beds.k -18.43094482 1.124831119
+## 5                            Age.years  -0.02247636 0.003373793
+## 6                     purpose.builtYes  -0.15070669 0.063357914
+## 7                        dementiaOther   0.32232160 0.071840458
+## 8                            OVer.65.m  -2.10650511 0.965291199
+## 9                         IDAOPI.score   0.09170900 0.228414718
+## 10                                herf  -2.22487991 1.520815332
+## 11                      log_chain_size   0.02772089 0.023172949
+## 12 sectorNot-For-Profit:log_chain_size  -0.00727521 0.045562806
+##      statistic      p.value
+## 1  -38.0662193 0.000000e+00
+## 2  -20.6575446 8.350384e-95
+## 3    5.3453093 9.026280e-08
+## 4  -16.3855218 2.426775e-60
+## 5   -6.6620447 2.700439e-11
+## 6   -2.3786562 1.737587e-02
+## 7    4.4866307 7.235835e-06
+## 8   -2.1822483 2.909121e-02
+## 9    0.4015021 6.880505e-01
+## 10  -1.4629521 1.434805e-01
+## 11   1.1962607 2.315948e-01
+## 12  -0.1596743 8.731376e-01
+## 
+## [[3]]
+##                                   term     estimate   std.error
+## 1                      Inadequate|Poor  -5.92381977 0.180935933
+## 2                            Poor|Good  -3.02458324 0.152231974
+## 3                 sectorNot-For-Profit   0.60012282 0.180522248
+## 4                         Total.Beds.k -18.09463695 1.294538076
+## 5                            Age.years  -0.02211950 0.004077727
+## 6                     purpose.builtYes  -0.12558802 0.084916735
+## 7                        dementiaOther   0.35694072 0.089859093
+## 8                            OVer.65.m   1.23754411 1.568555124
+## 9                         IDAOPI.score  -0.02413059 0.354567629
+## 10                                herf   0.89834550 2.340467270
+## 11                      log_chain_size   0.03425097 0.029753485
+## 12 sectorNot-For-Profit:log_chain_size   0.01205429 0.064993763
+##       statistic       p.value
+## 1  -32.73987464 4.231199e-235
+## 2  -19.86825216  7.662469e-88
+## 3    3.32437041  8.861841e-04
+## 4  -13.97767843  2.133341e-44
+## 5   -5.42446896  5.812709e-08
+## 6   -1.47895489  1.391524e-01
+## 7    3.97222704  7.120381e-05
+## 8    0.78897075  4.301291e-01
+## 9   -0.06805637  9.457408e-01
+## 10   0.38383169  7.011032e-01
+## 11   1.15115820  2.496672e-01
+## 12   0.18546840  8.528617e-01
+## 
+## [[4]]
+##                                   term      estimate   std.error
+## 1                      Inadequate|Poor  -5.358540063 0.153905795
+## 2                            Poor|Good  -2.601374393 0.132878902
+## 3                 sectorNot-For-Profit   0.732378275 0.146527974
+## 4                         Total.Beds.k -18.784157746 1.238910190
+## 5                            Age.years  -0.023666207 0.003576322
+## 6                     purpose.builtYes  -0.196799848 0.073275239
+## 7                        dementiaOther   0.322255546 0.074417185
+## 8                            OVer.65.m  -0.322422041 1.032260308
+## 9                         IDAOPI.score  -0.040817285 0.272465069
+## 10                                herf  -1.581903137 1.686783448
+## 11                      log_chain_size   0.019248849 0.024399204
+## 12 sectorNot-For-Profit:log_chain_size  -0.007296129 0.053766376
+##      statistic       p.value
+## 1  -34.8170130 1.344649e-265
+## 2  -19.5770311  2.427640e-85
+## 3    4.9982147  5.786354e-07
+## 4  -15.1618397  6.327188e-52
+## 5   -6.6174715  3.653945e-11
+## 6   -2.6857620  7.236463e-03
+## 7    4.3303915  1.488445e-05
+## 8   -0.3123457  7.547778e-01
+## 9   -0.1498074  8.809166e-01
+## 10  -0.9378223  3.483357e-01
+## 11   0.7889130  4.301629e-01
+## 12  -0.1357006  8.920580e-01
+## 
+## [[5]]
+##                                   term     estimate   std.error
+## 1                      Inadequate|Poor  -4.40098302 0.122850718
+## 2                            Poor|Good  -2.10627193 0.112953864
+## 3                 sectorNot-For-Profit   0.76800198 0.124974503
+## 4                         Total.Beds.k -14.80044088 1.065784640
+## 5                            Age.years  -0.01999120 0.003139182
+## 6                     purpose.builtYes  -0.14919725 0.062325062
+## 7                        dementiaOther   0.28369908 0.067797853
+## 8                            OVer.65.m  -1.79874648 1.020650830
+## 9                         IDAOPI.score  -0.10769476 0.224660958
+## 10                                herf  -0.95608142 1.557770180
+## 11                      log_chain_size   0.05361021 0.024935218
+## 12 sectorNot-For-Profit:log_chain_size  -0.04393790 0.047576610
+##      statistic       p.value
+## 1  -35.8238284 4.701531e-281
+## 2  -18.6471878  1.330963e-77
+## 3    6.1452693  7.982795e-10
+## 4  -13.8868964  7.606030e-44
+## 5   -6.3682826  1.911565e-10
+## 6   -2.3938565  1.667227e-02
+## 7    4.1844847  2.858137e-05
+## 8   -1.7623524  7.800977e-02
+## 9   -0.4793657  6.316785e-01
+## 10  -0.6137500  5.393806e-01
+## 11   2.1499794  3.155684e-02
+## 12  -0.9235190  3.557368e-01
+\end{verbatim}
+
+\subsection{Effect plots}\label{effect-plots}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ef.plot <-}\StringTok{ }\NormalTok{function(data, ..., .model) \{}
+    \KeywordTok{require}\NormalTok{(modelr, }\DataTypeTok{quietly =} \OtherTok{TRUE}\NormalTok{)}
+    \KeywordTok{require}\NormalTok{(ggplot2, }\DataTypeTok{quietly =} \OtherTok{TRUE}\NormalTok{)}
+    
+    \NormalTok{new_data <-}\StringTok{ }\KeywordTok{data_grid}\NormalTok{(}\DataTypeTok{data =} \NormalTok{data, ..., }\DataTypeTok{.model =} \NormalTok{.model)}
+    \NormalTok{pred <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(.model, }\DataTypeTok{newdata =} \NormalTok{new_data)}
+    \NormalTok{ret <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(new_data, pred)}
+    \NormalTok{ret <-}\StringTok{ }\KeywordTok{gather}\NormalTok{(ret, }\StringTok{"Rating"}\NormalTok{, }\StringTok{"Prediction"}\NormalTok{, }\KeywordTok{starts_with}\NormalTok{(}\StringTok{"fit."}\NormalTok{))}
+    \NormalTok{ret$Rating <-}\StringTok{ }\NormalTok{stringr::}\KeywordTok{str_sub}\NormalTok{(ret$Rating, }\DecValTok{5}\NormalTok{)}
+    \CommentTok{# ret$Rating <- ordered(ret$Rating, levels = c('Inadequate', 'Poor',}
+    \CommentTok{# 'Good'))}
+    
+    \NormalTok{vars <-}\StringTok{ }\NormalTok{pryr::}\KeywordTok{named_dots}\NormalTok{(...)}
+    \NormalTok{xvar <-}\StringTok{ }\NormalTok{vars[[}\DecValTok{1}\NormalTok{]]}
+    \NormalTok{if (}\KeywordTok{length}\NormalTok{(vars) ==}\StringTok{ }\DecValTok{1}\NormalTok{) \{}
+        \NormalTok{zvar <-}\StringTok{ }\OtherTok{NULL}
+    \NormalTok{\} else \{}
+        \NormalTok{zvar <-}\StringTok{ }\NormalTok{vars[[}\DecValTok{2}\NormalTok{]]}
+    \NormalTok{\}}
+    \NormalTok{g <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(ret, }\KeywordTok{aes_}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{substitute}\NormalTok{(xvar), }\DataTypeTok{y =} \KeywordTok{quote}\NormalTok{(Prediction), }\DataTypeTok{group =} \KeywordTok{substitute}\NormalTok{(zvar), }
+        \DataTypeTok{colour =} \KeywordTok{substitute}\NormalTok{(zvar))) +}\StringTok{ }\KeywordTok{geom_line}\NormalTok{() +}\StringTok{ }\KeywordTok{geom_point}\NormalTok{() +}\StringTok{ }\KeywordTok{facet_grid}\NormalTok{(~Rating) +}\StringTok{ }
+\StringTok{        }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{"top"}\NormalTok{)}
+    \KeywordTok{print}\NormalTok{(g)}
+    \KeywordTok{invisible}\NormalTok{(ret)}
+\NormalTok{\}}
+
+\NormalTok{clm_estimates <-}\StringTok{ }\NormalTok{function(}\DataTypeTok{f =} \NormalTok{forms.new, }\DataTypeTok{data =} \NormalTok{comp12.noLA, }\DataTypeTok{chn =} \StringTok{"log_chain_size"}\NormalTok{) \{}
+    \NormalTok{forms <-}\StringTok{ }\KeywordTok{map}\NormalTok{(f, ~}\KeywordTok{add_predictors}\NormalTok{(}\KeywordTok{formula}\NormalTok{(.x, }\DataTypeTok{env =} \NormalTok{.GlobalEnv), }\KeywordTok{formula}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"~ "}\NormalTok{, }
+        \NormalTok{chn))))}
+    \NormalTok{fit <-}\StringTok{ }\KeywordTok{fit_with}\NormalTok{(data, clm, forms, }\DataTypeTok{Hess =} \OtherTok{TRUE}\NormalTok{)}
+    \NormalTok{hc <-}\StringTok{ }\KeywordTok{map}\NormalTok{(fit, ~}\KeywordTok{get_CL_vcov}\NormalTok{(.x, comp12.noLA$care.home.group.new))}
+    \KeywordTok{return}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\DataTypeTok{fit =} \NormalTok{fit, }\DataTypeTok{formula =} \NormalTok{forms, }\DataTypeTok{tidyop =} \KeywordTok{map2}\NormalTok{(fit, hc, ~}\KeywordTok{tidy}\NormalTok{(.x, }
+        \DataTypeTok{cluster =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{vcov =} \NormalTok{.y))))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ef.plot}\NormalTok{(comp12.noLA, chain_type, sector, }\DataTypeTok{.model =} \NormalTok{fit.tri[[}\DecValTok{5}\NormalTok{]])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{ChainsAnalysis20170124_files/figure-latex/unnamed-chunk-15-1} \end{center}
+
+\section{Estimates using only new
+system}\label{estimates-using-only-new-system}
+
+\subsection{Dichotomous}\label{dichotomous-2}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit.di.new <-}\StringTok{ }\KeywordTok{clm_estimates}\NormalTok{(}\DataTypeTok{chn =} \StringTok{"in_chain"}\NormalTok{)}
+\NormalTok{fit.di.new$tidyop}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+##                    term     estimate   std.error    statistic
+## 1                   I|R  -3.31788626 0.146191506 -22.69547907
+## 2                   R|G  -0.92426091 0.138487769  -6.67395331
+## 3                   G|O   6.80947027 0.513949514  13.24929801
+## 4  sectorNot-For-Profit   0.38857216 0.089897586   4.32238699
+## 5          Total.Beds.k -16.30532694 1.574078168 -10.35865135
+## 6             Age.years  -0.02113061 0.003843945  -5.49711525
+## 7      purpose.builtYes   0.02853264 0.066204578   0.43097689
+## 8         dementiaOther   0.20758597 0.081972051   2.53239941
+## 9             OVer.65.m  -0.21650356 1.111575108  -0.19477186
+## 10         IDAOPI.score  -0.37194904 0.272435627  -1.36527314
+## 11                 herf   0.10991856 1.807200018   0.06082257
+## 12          in_chainYes   0.25277314 0.067406443   3.74998488
+##          p.value
+## 1  4.965065e-114
+## 2   2.490029e-11
+## 3   4.554434e-40
+## 4   1.543501e-05
+## 5   3.823145e-25
+## 6   3.860544e-08
+## 7   6.664852e-01
+## 8   1.132849e-02
+## 9   8.455715e-01
+## 10  1.721672e-01
+## 11  9.515005e-01
+## 12  1.768452e-04
+## 
+## [[2]]
+##                    term     estimate   std.error   statistic       p.value
+## 1                   I|R  -3.84880677 0.154188388 -24.9617162 1.593269e-137
+## 2                   R|G  -0.99439653 0.136665158  -7.2761525  3.434753e-13
+## 3                   G|O   5.06390985 0.256631946  19.7321881  1.141221e-86
+## 4  sectorNot-For-Profit   0.49728506 0.088245935   5.6352177  1.748373e-08
+## 5          Total.Beds.k -14.68530746 1.371532559 -10.7072248  9.414167e-27
+## 6             Age.years  -0.01863767 0.003945136  -4.7242147  2.310062e-06
+## 7      purpose.builtYes  -0.05447206 0.071118363  -0.7659353  4.437148e-01
+## 8         dementiaOther   0.23594220 0.088234013   2.6740505  7.494117e-03
+## 9             OVer.65.m  -1.73014925 1.121776426  -1.5423298  1.229935e-01
+## 10         IDAOPI.score   0.03177514 0.273307417   0.1162615  9.074453e-01
+## 11                 herf   2.91801757 1.830589619   1.5940315  1.109290e-01
+## 12          in_chainYes   0.23487590 0.069651845   3.3721419  7.458602e-04
+## 
+## [[3]]
+##                    term     estimate   std.error   statistic       p.value
+## 1                   I|R  -4.83725521 0.205814272 -23.5030115 3.799556e-122
+## 2                   R|G  -2.01992553 0.178412662 -11.3216490  1.025251e-29
+## 3                   G|O   4.02940978 0.198392874  20.3102546  1.043621e-91
+## 4  sectorNot-For-Profit   0.56349369 0.116654057   4.8304680  1.362125e-06
+## 5          Total.Beds.k -14.98679458 1.732079293  -8.6524876  5.038884e-18
+## 6             Age.years  -0.01383212 0.004667316  -2.9636122  3.040512e-03
+## 7      purpose.builtYes  -0.02181261 0.093979852  -0.2320988  8.164613e-01
+## 8         dementiaOther   0.31190522 0.102086020   3.0553177  2.248222e-03
+## 9             OVer.65.m   3.16470563 1.724243222   1.8354172  6.644390e-02
+## 10         IDAOPI.score  -0.11713819 0.409565125  -0.2860063  7.748733e-01
+## 11                 herf   3.11152658 2.841099425   1.0951840  2.734360e-01
+## 12          in_chainYes   0.11696989 0.087675087   1.3341292  1.821615e-01
+## 
+## [[4]]
+##                    term     estimate   std.error   statistic       p.value
+## 1                   I|R  -4.26790299 0.179577491 -23.7663583 7.444078e-125
+## 2                   R|G  -1.34890878 0.160227123  -8.4187294  3.805895e-17
+## 3                   G|O   4.26365493 0.208596678  20.4397067  7.418359e-93
+## 4  sectorNot-For-Profit   0.63062725 0.097207532   6.4874320  8.731175e-11
+## 5          Total.Beds.k -15.09712645 1.686673217  -8.9508307  3.528170e-19
+## 6             Age.years  -0.01848938 0.004159977  -4.4445876  8.806063e-06
+## 7      purpose.builtYes  -0.09757239 0.079202666  -1.2319332  2.179740e-01
+## 8         dementiaOther   0.22307096 0.091133156   2.4477475  1.437523e-02
+## 9             OVer.65.m  -0.34190691 1.144402481  -0.2987646  7.651197e-01
+## 10         IDAOPI.score  -0.09289303 0.316479279  -0.2935201  7.691246e-01
+## 11                 herf   1.70393301 1.897859475   0.8978183  3.692824e-01
+## 12          in_chainYes   0.14929764 0.072209019   2.0675761  3.867991e-02
+## 
+## [[5]]
+##                    term    estimate   std.error   statistic       p.value
+## 1                   I|R -3.17736416 0.152021478 -20.9007583  5.270114e-97
+## 2                   R|G -0.70537570 0.142624425  -4.9456866  7.587595e-07
+## 3                   G|O  4.61118505 0.196863732  23.4232330 2.478218e-121
+## 4  sectorNot-For-Profit  0.61631992 0.095101784   6.4806347  9.133757e-11
+## 5          Total.Beds.k -9.78620275 1.444789530  -6.7734452  1.257512e-11
+## 6             Age.years -0.01587397 0.003853299  -4.1195780  3.795669e-05
+## 7      purpose.builtYes -0.06774647 0.070459583  -0.9614941  3.363038e-01
+## 8         dementiaOther  0.22237611 0.084468289   2.6326580  8.471962e-03
+## 9             OVer.65.m -1.40332174 1.179744155  -1.1895136  2.342376e-01
+## 10         IDAOPI.score -0.15158907 0.269212053  -0.5630843  5.733775e-01
+## 11                 herf  3.18770863 1.883889195   1.6920892  9.062896e-02
+## 12          in_chainYes  0.30657543 0.072963084   4.2017882  2.648148e-05
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit.di.new.int <-}\StringTok{ }\KeywordTok{clm_estimates}\NormalTok{(}\DataTypeTok{chn =} \StringTok{"sector*in_chain"}\NormalTok{)}
+\NormalTok{fit.di.new.int$tidyop}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+##                                term     estimate   std.error    statistic
+## 1                               I|R  -3.32011898 0.146347366 -22.68656459
+## 2                               R|G  -0.92652767 0.138830130  -6.67382269
+## 3                               G|O   6.80764767 0.513963580  13.24538923
+## 4              sectorNot-For-Profit   0.33772408 0.160522260   2.10390806
+## 5                      Total.Beds.k -16.27562382 1.581944335 -10.28836696
+## 6                         Age.years  -0.02111370 0.003846345  -5.48928867
+## 7                  purpose.builtYes   0.02884084 0.066126764   0.43614478
+## 8                     dementiaOther   0.20781582 0.082011197   2.53399332
+## 9                         OVer.65.m  -0.21732517 1.111792489  -0.19547278
+## 10                     IDAOPI.score  -0.37273746 0.272479904  -1.36794479
+## 11                             herf   0.11291709 1.805279580   0.06254826
+## 12                      in_chainYes   0.24556674 0.072331073   3.39503805
+## 13 sectorNot-For-Profit:in_chainYes   0.06505951 0.189905005   0.34258977
+##          p.value
+## 1  6.080557e-114
+## 2   2.492247e-11
+## 3   4.797879e-40
+## 4   3.538647e-02
+## 5   7.951344e-25
+## 6   4.035556e-08
+## 7   6.627317e-01
+## 8   1.127709e-02
+## 9   8.450228e-01
+## 10  1.713294e-01
+## 11  9.501262e-01
+## 12  6.861906e-04
+## 13  7.319071e-01
+## 
+## [[2]]
+##                                term     estimate   std.error   statistic
+## 1                               I|R  -3.85414933 0.154267881 -24.9834853
+## 2                               R|G  -0.99967133 0.136870605  -7.3037694
+## 3                               G|O   5.06023922 0.256621954  19.7186529
+## 4              sectorNot-For-Profit   0.37183787 0.163861908   2.2692148
+## 5                      Total.Beds.k -14.61762540 1.375175419 -10.6296442
+## 6                         Age.years  -0.01860038 0.003950085  -4.7088563
+## 7                  purpose.builtYes  -0.05349740 0.071089796  -0.7525327
+## 8                     dementiaOther   0.23674514 0.088207828   2.6839471
+## 9                         OVer.65.m  -1.73559336 1.119550439  -1.5502592
+## 10                     IDAOPI.score   0.03069134 0.273088920   0.1123859
+## 11                             herf   2.92181010 1.827356466   1.5989273
+## 12                      in_chainYes   0.21768994 0.074288333   2.9303382
+## 13 sectorNot-For-Profit:in_chainYes   0.16105803 0.191452809   0.8412414
+##          p.value
+## 1  9.243055e-138
+## 2   2.798159e-13
+## 3   1.491483e-86
+## 4   2.325527e-02
+## 5   2.169386e-26
+## 6   2.491106e-06
+## 7   4.517308e-01
+## 8   7.275862e-03
+## 9   1.210793e-01
+## 10  9.105174e-01
+## 11  1.098368e-01
+## 12  3.385933e-03
+## 13  4.002127e-01
+## 
+## [[3]]
+##                                term     estimate   std.error   statistic
+## 1                               I|R  -4.83185134 0.205949341 -23.4613586
+## 2                               R|G  -2.01443932 0.178546351 -11.2824447
+## 3                               G|O   4.03540190 0.198263615  20.3537190
+## 4              sectorNot-For-Profit   0.73108027 0.287988402   2.5385754
+## 5                      Total.Beds.k -15.06707328 1.728268998  -8.7180140
+## 6                         Age.years  -0.01387995 0.004667597  -2.9736820
+## 7                  purpose.builtYes  -0.02254930 0.094106620  -0.2396143
+## 8                     dementiaOther   0.31146289 0.102083970   3.0510460
+## 9                         OVer.65.m   3.16893395 1.725621669   1.8364013
+## 10                     IDAOPI.score  -0.11599260 0.409865343  -0.2830017
+## 11                             herf   3.11044928 2.843337293   1.0939431
+## 12                      in_chainYes   0.13515908 0.091340941   1.4797206
+## 13 sectorNot-For-Profit:in_chainYes  -0.20807864 0.311492236  -0.6680059
+##          p.value
+## 1  1.012242e-121
+## 2   1.602304e-29
+## 3   4.303529e-92
+## 4   1.113048e-02
+## 5   2.831240e-18
+## 6   2.942499e-03
+## 7   8.106292e-01
+## 8   2.280456e-03
+## 9   6.629832e-02
+## 10  7.771755e-01
+## 11  2.739799e-01
+## 12  1.389478e-01
+## 13  5.041299e-01
+## 
+## [[4]]
+##                                term     estimate   std.error   statistic
+## 1                               I|R  -4.27081184 0.179921923 -23.7370286
+## 2                               R|G  -1.35180412 0.160527924  -8.4209905
+## 3                               G|O   4.26155932 0.208789689  20.4107748
+## 4              sectorNot-For-Profit   0.55612508 0.184624700   3.0121922
+## 5                      Total.Beds.k -15.05964361 1.691087452  -8.9053015
+## 6                         Age.years  -0.01846381 0.004160778  -4.4375849
+## 7                  purpose.builtYes  -0.09712758 0.079233854  -1.2258344
+## 8                     dementiaOther   0.22338765 0.091115438   2.4516992
+## 9                         OVer.65.m  -0.34634536 1.142666693  -0.3031027
+## 10                     IDAOPI.score  -0.09383573 0.316466210  -0.2965111
+## 11                             herf   1.70601244 1.897151877   0.8992493
+## 12                      in_chainYes   0.14021191 0.076757908   1.8266771
+## 13 sectorNot-For-Profit:in_chainYes   0.09462808 0.214572557   0.4410074
+##          p.value
+## 1  1.495850e-124
+## 2   3.733146e-17
+## 3   1.341414e-92
+## 4   2.593683e-03
+## 5   5.324115e-19
+## 6   9.097383e-06
+## 7   2.202610e-01
+## 8   1.421834e-02
+## 9   7.618116e-01
+## 10  7.668398e-01
+## 11  3.685199e-01
+## 12  6.774833e-02
+## 13  6.592076e-01
+## 
+## [[5]]
+##                                term     estimate   std.error    statistic
+## 1                               I|R -3.177587737 0.152302020 -20.86372676
+## 2                               R|G -0.705611147 0.142954009  -4.93593115
+## 3                               G|O  4.611025488 0.197195708  23.38299110
+## 4              sectorNot-For-Profit  0.610359875 0.168642371   3.61925577
+## 5                      Total.Beds.k -9.782873596 1.450739210  -6.74337161
+## 6                         Age.years -0.015872304 0.003852769  -4.11971321
+## 7                  purpose.builtYes -0.067707639 0.070439593  -0.96121564
+## 8                     dementiaOther  0.222408650 0.084487891   2.63243226
+## 9                         OVer.65.m -1.403511663 1.180073949  -1.18934213
+## 10                     IDAOPI.score -0.151617298 0.269233975  -0.56314326
+## 11                             herf  3.188010695 1.883566240   1.69253973
+## 12                      in_chainYes  0.305787391 0.077942995   3.92321838
+## 13 sectorNot-For-Profit:in_chainYes  0.007633277 0.200758997   0.03802209
+##          p.value
+## 1   1.144004e-96
+## 2   7.976925e-07
+## 3  6.366431e-121
+## 4   2.954515e-04
+## 5   1.547527e-11
+## 6   3.793443e-05
+## 7   3.364438e-01
+## 8   8.477593e-03
+## 9   2.343051e-01
+## 10  5.733373e-01
+## 11  9.054311e-02
+## 12  8.737389e-05
+## 13  9.696701e-01
+\end{verbatim}
+
+\subsection{Three levels}\label{three-levels}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit.tri.new <-}\StringTok{ }\KeywordTok{clm_estimates}\NormalTok{(}\DataTypeTok{chn =} \StringTok{"chain_type"}\NormalTok{)}
+\NormalTok{fit.tri.new$tidyop}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+##                    term      estimate   std.error    statistic
+## 1                   I|R  -3.322212424 0.145877837 -22.77393526
+## 2                   R|G  -0.927059648 0.137408814  -6.74672624
+## 3                   G|O   6.813334348 0.511471404  13.32104649
+## 4  sectorNot-For-Profit   0.356571197 0.090491513   3.94038274
+## 5          Total.Beds.k -16.745582608 1.523872852 -10.98883190
+## 6             Age.years  -0.020344561 0.003842898  -5.29406674
+## 7      purpose.builtYes   0.008028501 0.065309853   0.12292940
+## 8         dementiaOther   0.201869403 0.081834832   2.46679069
+## 9             OVer.65.m  -0.292792861 1.123334760  -0.26064613
+## 10         IDAOPI.score  -0.357369643 0.273408465  -1.30709063
+## 11                 herf   0.165512604 1.786622841   0.09263992
+## 12      chain_typeLarge   0.341964632 0.112720342   3.03374374
+## 13     chain_typeMedium   0.360037513 0.093237977   3.86148996
+## 14      chain_typeSmall   0.120681677 0.080015562   1.50822757
+##          p.value
+## 1  8.313620e-115
+## 2   1.512182e-11
+## 3   1.746422e-40
+## 4   8.135171e-05
+## 5   4.324870e-28
+## 6   1.196257e-07
+## 7   9.021630e-01
+## 8   1.363300e-02
+## 9   7.943654e-01
+## 10  1.911819e-01
+## 11  9.261896e-01
+## 12  2.415395e-03
+## 13  1.126976e-04
+## 14  1.314963e-01
+## 
+## [[2]]
+##                    term     estimate   std.error   statistic       p.value
+## 1                   I|R  -3.85337602 0.153803400 -25.0539066 1.582835e-138
+## 2                   R|G  -0.99887152 0.135554603  -7.3687761  1.722016e-13
+## 3                   G|O   5.06161740 0.255097592  19.8418862  1.295075e-87
+## 4  sectorNot-For-Profit   0.48330304 0.089080700   5.4254517  5.780815e-08
+## 5          Total.Beds.k -14.96237949 1.382237311 -10.8247545  2.627826e-27
+## 6             Age.years  -0.01827313 0.003937331  -4.6409943  3.467368e-06
+## 7      purpose.builtYes  -0.06601168 0.069898375  -0.9443951  3.449678e-01
+## 8         dementiaOther   0.23234801 0.088154404   2.6356937  8.396549e-03
+## 9             OVer.65.m  -1.76427558 1.125521515  -1.5675183  1.169936e-01
+## 10         IDAOPI.score   0.03975291 0.273509450   0.1453438  8.844394e-01
+## 11                 herf   2.90764067 1.814205033   1.6027079  1.089992e-01
+## 12      chain_typeLarge   0.29992229 0.117254203   2.5578809  1.053121e-02
+## 13     chain_typeMedium   0.27340683 0.095751286   2.8553854  4.298463e-03
+## 14      chain_typeSmall   0.16351238 0.083771498   1.9518856  5.095179e-02
+## 
+## [[3]]
+##                    term     estimate   std.error   statistic       p.value
+## 1                   I|R  -4.84156175 0.204949389 -23.6232065 2.226028e-123
+## 2                   R|G  -2.02435357 0.177477209 -11.4062734  3.890421e-30
+## 3                   G|O   4.02749075 0.196208134  20.5266248  1.245301e-93
+## 4  sectorNot-For-Profit   0.55181467 0.121055833   4.5583485  5.155744e-06
+## 5          Total.Beds.k -15.26074743 1.698697710  -8.9837923  2.615913e-19
+## 6             Age.years  -0.01357390 0.004688278  -2.8952855  3.788138e-03
+## 7      purpose.builtYes  -0.03257977 0.095971082  -0.3394748  7.342520e-01
+## 8         dementiaOther   0.30901845 0.102455516   3.0161231  2.560293e-03
+## 9             OVer.65.m   3.14286054 1.728136551   1.8186413  6.896617e-02
+## 10         IDAOPI.score  -0.10702388 0.410659145  -0.2606149  7.943895e-01
+## 11                 herf   3.06677080 2.834010393   1.0821311  2.791943e-01
+## 12      chain_typeLarge   0.18091267 0.126412553   1.4311290  1.523933e-01
+## 13     chain_typeMedium   0.14677286 0.123538752   1.1880714  2.348053e-01
+## 14      chain_typeSmall   0.06107698 0.107370573   0.5688428  5.694628e-01
+## 
+## [[4]]
+##                    term     estimate   std.error   statistic       p.value
+## 1                   I|R  -4.27243386 0.178186070 -23.9773730 4.789684e-127
+## 2                   R|G  -1.35337557 0.159465833  -8.4869313  2.121651e-17
+## 3                   G|O   4.26217871 0.207930191  20.4981234  2.237572e-93
+## 4  sectorNot-For-Profit   0.61347930 0.098850808   6.2061132  5.431107e-10
+## 5          Total.Beds.k -15.35391449 1.635231217  -9.3894456  6.031692e-21
+## 6             Age.years  -0.01807110 0.004166504  -4.3372347  1.442866e-05
+## 7      purpose.builtYes  -0.11045669 0.080113468  -1.3787531  1.679709e-01
+## 8         dementiaOther   0.21930387 0.090836016   2.4142833  1.576620e-02
+## 9             OVer.65.m  -0.38687212 1.140598258  -0.3391835  7.344715e-01
+## 10         IDAOPI.score  -0.08375398 0.317830923  -0.2635174  7.921518e-01
+## 11                 herf   1.69519101 1.891897623   0.8960268  3.702384e-01
+## 12      chain_typeLarge   0.20368771 0.114728515   1.7753887  7.583373e-02
+## 13     chain_typeMedium   0.20718685 0.105201946   1.9694203  4.890484e-02
+## 14      chain_typeSmall   0.06928805 0.088456977   0.7832966  4.334530e-01
+## 
+## [[5]]
+##                    term     estimate   std.error   statistic       p.value
+## 1                   I|R  -3.19017857 0.152354569 -20.9391723  2.355152e-97
+## 2                   R|G  -0.71711715 0.142221050  -5.0422715  4.600379e-07
+## 3                   G|O   4.60380296 0.196043920  23.4835284 6.010054e-122
+## 4  sectorNot-For-Profit   0.60108175 0.096081086   6.2559841  3.950169e-10
+## 5          Total.Beds.k -10.22506236 1.420252071  -7.1994701  6.044700e-13
+## 6             Age.years  -0.01551121 0.003839742  -4.0396494  5.353117e-05
+## 7      purpose.builtYes  -0.08657589 0.071059761  -1.2183532  2.230898e-01
+## 8         dementiaOther   0.21696088 0.084776179   2.5592198  1.049074e-02
+## 9             OVer.65.m  -1.44534630 1.187010901  -1.2176352  2.233626e-01
+## 10         IDAOPI.score  -0.13964441 0.269938127  -0.5173201  6.049328e-01
+## 11                 herf   3.14724431 1.875934635   1.6776940  9.340685e-02
+## 12      chain_typeLarge   0.42358611 0.127292536   3.3276587  8.757910e-04
+## 13     chain_typeMedium   0.33787607 0.095250322   3.5472434  3.892848e-04
+## 14      chain_typeSmall   0.20384727 0.083004082   2.4558705  1.405438e-02
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit.tri.new.int <-}\StringTok{ }\KeywordTok{clm_estimates}\NormalTok{(}\DataTypeTok{chn =} \StringTok{"sector*chain_type"}\NormalTok{)}
+\NormalTok{fit.tri.new.int$tidyop}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+##                                     term     estimate   std.error
+## 1                                    I|R  -3.32779081 0.146302509
+## 2                                    R|G  -0.93288189 0.137468257
+## 3                                    G|O   6.81041357 0.511822508
+## 4                   sectorNot-For-Profit   0.31098175 0.157580354
+## 5                           Total.Beds.k -16.70432266 1.519240723
+## 6                              Age.years  -0.02042443 0.003842828
+## 7                       purpose.builtYes   0.01236928 0.065525094
+## 8                          dementiaOther   0.20131313 0.081924380
+## 9                              OVer.65.m  -0.34962715 1.121951453
+## 10                          IDAOPI.score  -0.35858502 0.273517413
+## 11                                  herf   0.19582026 1.780624626
+## 12                       chain_typeLarge   0.34955284 0.129341889
+## 13                      chain_typeMedium   0.31445607 0.107942673
+## 14                       chain_typeSmall   0.12569613 0.085944926
+## 15  sectorNot-For-Profit:chain_typeLarge  -0.02224258 0.251731249
+## 16 sectorNot-For-Profit:chain_typeMedium   0.16754973 0.227393418
+## 17  sectorNot-For-Profit:chain_typeSmall  -0.01346545 0.238527689
+##       statistic       p.value
+## 1  -22.74595849 1.573471e-114
+## 2   -6.78616221  1.151557e-11
+## 3   13.30620178  2.130398e-40
+## 4    1.97348049  4.844085e-02
+## 5  -10.99517832  4.031159e-28
+## 6   -5.31494722  1.066882e-07
+## 7    0.18877167  8.502718e-01
+## 8    2.45730431  1.399841e-02
+## 9   -0.31162413  7.553262e-01
+## 10  -1.31101348  1.898532e-01
+## 11   0.10997279  9.124310e-01
+## 12   2.70254935  6.880997e-03
+## 13   2.91317659  3.577722e-03
+## 14   1.46251947  1.435989e-01
+## 15  -0.08835842  9.295918e-01
+## 16   0.73682752  4.612272e-01
+## 17  -0.05645235  9.549815e-01
+## 
+## [[2]]
+##                                     term     estimate   std.error
+## 1                                    I|R  -3.86310752 0.154784863
+## 2                                    R|G  -1.00868934 0.136184154
+## 3                                    G|O   5.05599110 0.254945376
+## 4                   sectorNot-For-Profit   0.36251942 0.164440171
+## 5                           Total.Beds.k -14.87427373 1.382766411
+## 6                              Age.years  -0.01837324 0.003934305
+## 7                       purpose.builtYes  -0.06090662 0.069673587
+## 8                          dementiaOther   0.23225836 0.087549456
+## 9                              OVer.65.m  -1.82972207 1.116141733
+## 10                          IDAOPI.score   0.03796729 0.273642936
+## 11                                  herf   2.94244003 1.805171859
+## 12                       chain_typeLarge   0.29737251 0.133942604
+## 13                      chain_typeMedium   0.21313916 0.110692351
+## 14                       chain_typeSmall   0.16227235 0.089915610
+## 15  sectorNot-For-Profit:chain_typeLarge   0.07034804 0.251340367
+## 16 sectorNot-For-Profit:chain_typeMedium   0.27628415 0.228384078
+## 17  sectorNot-For-Profit:chain_typeSmall   0.06466129 0.248301295
+##      statistic       p.value
+## 1  -24.9579154 1.752082e-137
+## 2   -7.4068040  1.293795e-13
+## 3   19.8316643  1.587009e-87
+## 4    2.2045673  2.748448e-02
+## 5  -10.7568955  5.499165e-27
+## 6   -4.6700080  3.011881e-06
+## 7   -0.8741708  3.820252e-01
+## 8    2.6528818  7.980781e-03
+## 9   -1.6393277  1.011450e-01
+## 10   0.1387476  8.896496e-01
+## 11   1.6300055  1.031003e-01
+## 12   2.2201488  2.640867e-02
+## 13   1.9255094  5.416566e-02
+## 14   1.8047183  7.111878e-02
+## 15   0.2798915  7.795607e-01
+## 16   1.2097347  2.263807e-01
+## 17   0.2604146  7.945440e-01
+## 
+## [[3]]
+##                                     term     estimate   std.error
+## 1                                    I|R  -4.84150608 0.205322276
+## 2                                    R|G  -2.02387996 0.178044049
+## 3                                    G|O   4.03756136 0.196398779
+## 4                   sectorNot-For-Profit   0.67679419 0.279709602
+## 5                           Total.Beds.k -15.19777619 1.701930277
+## 6                              Age.years  -0.01385001 0.004694682
+## 7                       purpose.builtYes  -0.02814890 0.095761198
+## 8                          dementiaOther   0.31005619 0.102504702
+## 9                              OVer.65.m   3.01849812 1.724154373
+## 10                          IDAOPI.score  -0.10948358 0.409747703
+## 11                                  herf   3.23529006 2.830778500
+## 12                       chain_typeLarge   0.18439148 0.139389380
+## 13                      chain_typeMedium   0.09791526 0.138206031
+## 14                       chain_typeSmall   0.12171056 0.112319018
+## 15  sectorNot-For-Profit:chain_typeLarge  -0.13211532 0.330441734
+## 16 sectorNot-For-Profit:chain_typeMedium   0.05930392 0.332993352
+## 17  sectorNot-For-Profit:chain_typeSmall  -0.52343331 0.405126233
+##      statistic       p.value
+## 1  -23.5800331 6.178055e-123
+## 2  -11.3672991  6.084117e-30
+## 3   20.5579758  6.530090e-94
+## 4    2.4196316  1.553624e-02
+## 5   -8.9297290  4.270535e-19
+## 6   -2.9501479  3.176218e-03
+## 7   -0.2939489  7.687970e-01
+## 8    3.0247997  2.487979e-03
+## 9    1.7507122  7.999549e-02
+## 10  -0.2671975  7.893171e-01
+## 11   1.1428976  2.530811e-01
+## 12   1.3228517  1.858847e-01
+## 13   0.7084732  4.786515e-01
+## 14   1.0836149  2.785356e-01
+## 15  -0.3998143  6.892933e-01
+## 16   0.1780934  8.586496e-01
+## 17  -1.2920252  1.963484e-01
+## 
+## [[4]]
+##                                     term     estimate   std.error
+## 1                                    I|R  -4.27650762 0.178035894
+## 2                                    R|G  -1.35738155 0.159584799
+## 3                                    G|O   4.26502678 0.208234087
+## 4                   sectorNot-For-Profit   0.54903132 0.185810164
+## 5                           Total.Beds.k -15.22865666 1.645835741
+## 6                              Age.years  -0.01823679 0.004183651
+## 7                       purpose.builtYes  -0.10582607 0.079940912
+## 8                          dementiaOther   0.22103348 0.090883023
+## 9                              OVer.65.m  -0.47189642 1.130016420
+## 10                          IDAOPI.score  -0.08564552 0.317380636
+## 11                                  herf   1.81518879 1.865265646
+## 12                       chain_typeLarge   0.18793316 0.128934265
+## 13                      chain_typeMedium   0.14868024 0.120902984
+## 14                       chain_typeSmall   0.09884399 0.094324227
+## 15  sectorNot-For-Profit:chain_typeLarge   0.10262431 0.258569190
+## 16 sectorNot-For-Profit:chain_typeMedium   0.23950761 0.265496486
+## 17  sectorNot-For-Profit:chain_typeSmall  -0.18158726 0.275253018
+##      statistic       p.value
+## 1  -24.0204799 1.699198e-127
+## 2   -8.5057071  1.804921e-17
+## 3   20.4818857  3.123299e-93
+## 4    2.9547970  3.128748e-03
+## 5   -9.2528411  2.186032e-20
+## 6   -4.3590617  1.306213e-05
+## 7   -1.3238036  1.855683e-01
+## 8    2.4320656  1.501299e-02
+## 9   -0.4176014  6.762386e-01
+## 10  -0.2698511  7.872748e-01
+## 11   0.9731530  3.304773e-01
+## 12   1.4575890  1.449539e-01
+## 13   1.2297483  2.187914e-01
+## 14   1.0479173  2.946767e-01
+## 15   0.3968930  6.914463e-01
+## 16   0.9021122  3.669973e-01
+## 17  -0.6597103  5.094397e-01
+## 
+## [[5]]
+##                                     term     estimate   std.error
+## 1                                    I|R  -3.19390056 0.152466779
+## 2                                    R|G  -0.72084814 0.142260598
+## 3                                    G|O   4.60182224 0.195825386
+## 4                   sectorNot-For-Profit   0.60295536 0.169387194
+## 5                           Total.Beds.k -10.19726216 1.422029269
+## 6                              Age.years  -0.01562000 0.003838677
+## 7                       purpose.builtYes  -0.08340928 0.070775624
+## 8                          dementiaOther   0.21656325 0.084880909
+## 9                              OVer.65.m  -1.51128967 1.185137114
+## 10                          IDAOPI.score  -0.14034547 0.269838411
+## 11                                  herf   3.18306318 1.866630788
+## 12                       chain_typeLarge   0.43414296 0.142683800
+## 13                      chain_typeMedium   0.30205739 0.108624981
+## 14                       chain_typeSmall   0.21753801 0.088818984
+## 15  sectorNot-For-Profit:chain_typeLarge  -0.06995775 0.285981138
+## 16 sectorNot-For-Profit:chain_typeMedium   0.10749325 0.232012696
+## 17  sectorNot-For-Profit:chain_typeSmall  -0.10115051 0.251119713
+##      statistic       p.value
+## 1  -20.9481736  1.949664e-97
+## 2   -5.0670962  4.039301e-07
+## 3   23.4996203 4.115354e-122
+## 4    3.5596278  3.713808e-04
+## 5   -7.1709228  7.449389e-13
+## 6   -4.0691096  4.719315e-05
+## 7   -1.1785029  2.385962e-01
+## 8    2.5513776  1.072980e-02
+## 9   -1.2752024  2.022376e-01
+## 10  -0.5201093  6.029874e-01
+## 11   1.7052452  8.814870e-02
+## 12   3.0426927  2.344716e-03
+## 13   2.7807360  5.423583e-03
+## 14   2.4492288  1.431625e-02
+## 15  -0.2446236  8.067479e-01
+## 16   0.4633076  6.431439e-01
+## 17  -0.4027980  6.870969e-01
+\end{verbatim}
+
+\subsection{Continuous}\label{continuous-1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit.cont.new <-}\StringTok{ }\KeywordTok{clm_estimates}\NormalTok{(}\DataTypeTok{chn =} \StringTok{"log_chain_size"}\NormalTok{)}
+\NormalTok{fit.cont.new$tidyop}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+##                    term     estimate   std.error    statistic
+## 1                   I|R  -3.36345876 0.142430765 -23.61469278
+## 2                   R|G  -0.96994768 0.136698331  -7.09553421
+## 3                   G|O   6.76712689 0.512810710  13.19614969
+## 4  sectorNot-For-Profit   0.40176154 0.093264254   4.30777631
+## 5          Total.Beds.k -16.73360330 1.447121326 -11.56337274
+## 6             Age.years  -0.02128891 0.003692765  -5.76503394
+## 7      purpose.builtYes   0.01168125 0.064783186   0.18031296
+## 8         dementiaOther   0.19717232 0.081759178   2.41162313
+## 9             OVer.65.m  -0.28059728 1.126780409  -0.24902570
+## 10         IDAOPI.score  -0.35204759 0.272992637  -1.28958639
+## 11                 herf   0.05775212 1.796473985   0.03214749
+## 12       log_chain_size   0.06792675 0.023057684   2.94594838
+##          p.value
+## 1  2.722806e-123
+## 2   1.288528e-12
+## 3   9.233532e-40
+## 4   1.649040e-05
+## 5   6.317765e-31
+## 6   8.164141e-09
+## 7   8.569069e-01
+## 8   1.588169e-02
+## 9   8.033409e-01
+## 10  1.971943e-01
+## 11  9.743544e-01
+## 12  3.219661e-03
+## 
+## [[2]]
+##                    term     estimate   std.error   statistic       p.value
+## 1                   I|R  -3.89853555 0.154032879 -25.3097622 2.494104e-141
+## 2                   R|G  -1.04508830 0.136965833  -7.6302847  2.342359e-14
+## 3                   G|O   5.01415725 0.262214412  19.1223556  1.645072e-81
+## 4  sectorNot-For-Profit   0.51365947 0.090236644   5.6923601  1.252952e-08
+## 5          Total.Beds.k -14.99148386 1.346250337 -11.1357327  8.405097e-29
+## 6             Age.years  -0.01897144 0.003868309  -4.9043240  9.374966e-07
+## 7      purpose.builtYes  -0.06693803 0.069771955  -0.9593831  3.373658e-01
+## 8         dementiaOther   0.22714935 0.088373572   2.5703313  1.016013e-02
+## 9             OVer.65.m  -1.79453773 1.131049659  -1.5866127  1.126004e-01
+## 10         IDAOPI.score   0.04650024 0.273399851   0.1700815  8.649461e-01
+## 11                 herf   2.84636387 1.818270995   1.5654233  1.174837e-01
+## 12       log_chain_size   0.05836327 0.023290415   2.5058923  1.221428e-02
+## 
+## [[3]]
+##                    term     estimate   std.error   statistic       p.value
+## 1                   I|R  -4.86249776 0.204482472 -23.7795334 5.439331e-125
+## 2                   R|G  -2.04553529 0.175257848 -11.6715760  1.780932e-31
+## 3                   G|O   4.00498612 0.198107888  20.2161871  7.052815e-91
+## 4  sectorNot-For-Profit   0.57085878 0.116763097   4.8890342  1.013319e-06
+## 5          Total.Beds.k -15.19177239 1.676726491  -9.0603760  1.300017e-19
+## 6             Age.years  -0.01400405 0.004506507  -3.1075180  1.886655e-03
+## 7      purpose.builtYes  -0.02878587 0.096878624  -0.2971334  7.663647e-01
+## 8         dementiaOther   0.30730150 0.102606799   2.9949429  2.744962e-03
+## 9             OVer.65.m   3.14090833 1.729077616   1.8165225  6.929027e-02
+## 10         IDAOPI.score  -0.10817727 0.409511037  -0.2641620  7.916551e-01
+## 11                 herf   3.04942161 2.842076100   1.0729556  2.832910e-01
+## 12       log_chain_size   0.03012656 0.024924479   1.2087139  2.267728e-01
+## 
+## [[4]]
+##                    term     estimate   std.error   statistic       p.value
+## 1                   I|R  -4.29582786 0.174955892 -24.5537764 3.941417e-133
+## 2                   R|G  -1.37720141 0.154592177  -8.9086100  5.167635e-19
+## 3                   G|O   4.23686069 0.205065752  20.6609863  7.775969e-95
+## 4  sectorNot-For-Profit   0.63876805 0.097586134   6.5456846  5.922346e-11
+## 5          Total.Beds.k -15.35165488 1.583271454  -9.6961610  3.130568e-22
+## 6             Age.years  -0.01861295 0.004029904  -4.6187068  3.861391e-06
+## 7      purpose.builtYes  -0.10819251 0.080646360  -1.3415672  1.797364e-01
+## 8         dementiaOther   0.21735117 0.091107345   2.3856603  1.704849e-02
+## 9             OVer.65.m  -0.38681153 1.148669366  -0.3367475  7.363073e-01
+## 10         IDAOPI.score  -0.08153152 0.317133603  -0.2570889  7.971102e-01
+## 11                 herf   1.63739514 1.894898516   0.8641070  3.875291e-01
+## 12       log_chain_size   0.04006564 0.021387431   1.8733263  6.102334e-02
+## 
+## [[5]]
+##                    term     estimate   std.error  statistic       p.value
+## 1                   I|R  -3.23935052 0.149022500 -21.737325 9.105314e-105
+## 2                   R|G  -0.76717885 0.138761284  -5.528767  3.224888e-08
+## 3                   G|O   4.55249771 0.196525491  23.164922 1.028340e-118
+## 4  sectorNot-For-Profit   0.63374295 0.096527732   6.565398  5.189415e-11
+## 5          Total.Beds.k -10.26985479 1.373333170  -7.478050  7.543321e-14
+## 6             Age.years  -0.01620763 0.003715813  -4.361799  1.289972e-05
+## 7      purpose.builtYes  -0.08808293 0.071739645  -1.227814  2.195168e-01
+## 8         dementiaOther   0.20948989 0.085069212   2.462582  1.379407e-02
+## 9             OVer.65.m  -1.48424609 1.193250505  -1.243868  2.135482e-01
+## 10         IDAOPI.score  -0.13213685 0.269429489  -0.490432  6.238282e-01
+## 11                 herf   3.08936888 1.873511367   1.648973  9.915325e-02
+## 12       log_chain_size   0.08056225 0.024852521   3.241613  1.188553e-03
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit.cont.new.int <-}\StringTok{ }\KeywordTok{clm_estimates}\NormalTok{(}\DataTypeTok{chn =} \StringTok{"sector*log_chain_size"}\NormalTok{)}
+\NormalTok{fit.cont.new.int$tidyop}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+##                                   term      estimate   std.error
+## 1                                  I|R  -3.363589604 0.142513257
+## 2                                  R|G  -0.970085009 0.136977263
+## 3                                  G|O   6.767040632 0.512963312
+## 4                 sectorNot-For-Profit   0.394384836 0.139031410
+## 5                         Total.Beds.k -16.726775021 1.457734581
+## 6                            Age.years  -0.021285540 0.003696019
+## 7                     purpose.builtYes   0.011668606 0.064810842
+## 8                        dementiaOther   0.197246353 0.081729635
+## 9                            OVer.65.m  -0.280399777 1.126169621
+## 10                        IDAOPI.score  -0.352072904 0.272999640
+## 11                                herf   0.061644248 1.790262971
+## 12                      log_chain_size   0.067601200 0.025289264
+## 13 sectorNot-For-Profit:log_chain_size   0.002910653 0.052136792
+##       statistic       p.value
+## 1  -23.60194187 3.681164e-123
+## 2   -7.08208782  1.419986e-12
+## 3   13.19205581  9.748989e-40
+## 4    2.83665998  4.558813e-03
+## 5  -11.47449970  1.771996e-30
+## 6   -5.75904578  8.459076e-09
+## 7    0.18004096  8.571204e-01
+## 8    2.41340062  1.580444e-02
+## 9   -0.24898539  8.033721e-01
+## 10  -1.28964604  1.971736e-01
+## 11   0.03443307  9.725318e-01
+## 12   2.67311854  7.514969e-03
+## 13   0.05582725  9.554794e-01
+## 
+## [[2]]
+##                                   term     estimate  std.error   statistic
+## 1                                  I|R  -3.89906030 0.15397786 -25.3222146
+## 2                                  R|G  -1.04560043 0.13701981  -7.6310167
+## 3                                  G|O   5.01392819 0.26219968  19.1225564
+## 4                 sectorNot-For-Profit   0.48247113 0.14571761   3.3110008
+## 5                         Total.Beds.k -14.96485963 1.34515083 -11.1250421
+## 6                            Age.years  -0.01895902 0.00387489  -4.8927902
+## 7                     purpose.builtYes  -0.06691313 0.06976790  -0.9590818
+## 8                        dementiaOther   0.22755132 0.08823200   2.5790111
+## 9                            OVer.65.m  -1.79408411 1.13028641  -1.5872827
+## 10                        IDAOPI.score   0.04649413 0.27331493   0.1701119
+## 11                                herf   2.85974510 1.81770815   1.5732697
+## 12                      log_chain_size   0.05706048 0.02524300   2.2604475
+## 13 sectorNot-For-Profit:log_chain_size   0.01224118 0.05028837   0.2434197
+##          p.value
+## 1  1.818833e-141
+## 2   2.329095e-14
+## 3   1.638751e-81
+## 4   9.296294e-04
+## 5   9.476116e-29
+## 6   9.941638e-07
+## 7   3.375175e-01
+## 8   9.908359e-03
+## 9   1.124486e-01
+## 10  8.649221e-01
+## 11  1.156564e-01
+## 12  2.379349e-02
+## 13  8.076803e-01
+## 
+## [[3]]
+##                                   term      estimate   std.error
+## 1                                  I|R  -4.862330512 0.204603989
+## 2                                  R|G  -2.045367187 0.175372265
+## 3                                  G|O   4.005154307 0.198245667
+## 4                 sectorNot-For-Profit   0.586852269 0.225896168
+## 5                         Total.Beds.k -15.204570068 1.679672996
+## 6                            Age.years  -0.014010961 0.004513027
+## 7                     purpose.builtYes  -0.028748765 0.096857988
+## 8                        dementiaOther   0.307179202 0.102578791
+## 9                            OVer.65.m   3.140457561 1.728711397
+## 10                        IDAOPI.score  -0.108194263 0.409605091
+## 11                                herf   3.042736849 2.838060455
+## 12                      log_chain_size   0.030680743 0.026503119
+## 13 sectorNot-For-Profit:log_chain_size  -0.006123527 0.065113453
+##       statistic       p.value
+## 1  -23.76459295 7.763603e-125
+## 2  -11.66300263  1.969715e-31
+## 3   20.20298534  9.215421e-91
+## 4    2.59788501  9.379990e-03
+## 5   -9.05210127  1.402431e-19
+## 6   -3.10455955  1.905626e-03
+## 7   -0.29681357  7.666088e-01
+## 8    2.99456838  2.748334e-03
+## 9    1.81664653  6.927125e-02
+## 10  -0.26414287  7.916698e-01
+## 11   1.07211841  2.836669e-01
+## 12   1.15762763  2.470160e-01
+## 13  -0.09404396  9.250742e-01
+## 
+## [[4]]
+##                                   term      estimate  std.error
+## 1                                  I|R  -4.296192573 0.17518741
+## 2                                  R|G  -1.377553560 0.15478728
+## 3                                  G|O   4.236681410 0.20515765
+## 4                 sectorNot-For-Profit   0.614333716 0.16165576
+## 5                         Total.Beds.k -15.332127026 1.58971458
+## 6                            Age.years  -0.018601562 0.00402868
+## 7                     purpose.builtYes  -0.108189795 0.08065962
+## 8                        dementiaOther   0.217597739 0.09114980
+## 9                            OVer.65.m  -0.387191439 1.14860591
+## 10                        IDAOPI.score  -0.081623911 0.31709196
+## 11                                herf   1.648368759 1.89259485
+## 12                      log_chain_size   0.039146562 0.02307029
+## 13 sectorNot-For-Profit:log_chain_size   0.009498035 0.05322950
+##      statistic       p.value
+## 1  -24.5234096 8.313923e-133
+## 2   -8.8996562  5.601996e-19
+## 3   20.6508577  9.590203e-95
+## 4    3.8002587  1.445451e-04
+## 5   -9.6445784  5.182368e-22
+## 6   -4.6172840  3.887950e-06
+## 7   -1.3413130  1.798189e-01
+## 8    2.3872542  1.697475e-02
+## 9   -0.3370969  7.360439e-01
+## 10  -0.2574140  7.968592e-01
+## 11   0.8709570  3.837776e-01
+## 12   1.6968384  8.972721e-02
+## 13   0.1784356  8.583809e-01
+## 
+## [[5]]
+##                                   term     estimate   std.error
+## 1                                  I|R  -3.23831690 0.149457399
+## 2                                  R|G  -0.76593501 0.139268547
+## 3                                  G|O   4.55302982 0.196894652
+## 4                 sectorNot-For-Profit   0.70741959 0.149131064
+## 5                         Total.Beds.k -10.33347141 1.365111580
+## 6                            Age.years  -0.01623254 0.003709452
+## 7                     purpose.builtYes  -0.08806031 0.071750334
+## 8                        dementiaOther   0.20866684 0.085101424
+## 9                            OVer.65.m  -1.48442154 1.194853608
+## 10                        IDAOPI.score  -0.13235626 0.269669406
+## 11                                herf   3.05385918 1.874822642
+## 12                      log_chain_size   0.08357733 0.027115843
+## 13 sectorNot-For-Profit:log_chain_size  -0.02896712 0.055993484
+##      statistic       p.value
+## 1  -21.6671568 4.188320e-104
+## 2   -5.4996985  3.804413e-08
+## 3   23.1241924 2.644208e-118
+## 4    4.7436098  2.099430e-06
+## 5   -7.5696900  3.741160e-14
+## 6   -4.3759943  1.208802e-05
+## 7   -1.2273157  2.197040e-01
+## 8    2.4519782  1.420733e-02
+## 9   -1.2423460  2.141089e-01
+## 10  -0.4908093  6.235613e-01
+## 11   1.6288790  1.033386e-01
+## 12   3.0822324  2.054544e-03
+## 13  -0.5173303  6.049256e-01
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ef.plot}\NormalTok{(comp12.noLA, chain_type, sector, }\DataTypeTok{.model =} \NormalTok{fit.tri.new$fit[[}\DecValTok{5}\NormalTok{]])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{ChainsAnalysis20170124_files/figure-latex/unnamed-chunk-19-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ef.plot}\NormalTok{(comp12.noLA, log_chain_size, sector, }\DataTypeTok{.model =} \NormalTok{fit.cont.int[[}\DecValTok{5}\NormalTok{]])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{ChainsAnalysis20170124_files/figure-latex/unnamed-chunk-20-1} \end{center}
+
+
+\end{document}
